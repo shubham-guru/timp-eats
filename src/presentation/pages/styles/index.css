@@ -1,0 +1,13 @@
+.head-flex-container{
+    background-color: #f9f9f9;
+    padding: 1vmax;
+}
+#contact-us-btn{
+   padding: 1vmax 5vmax !important;
+   background-color: aqua !important;
+}
+.heading-text{
+    font-size: 2vmax;
+    font-family: 'Jost', sans-serif;
+    font-style: italic;
+}
