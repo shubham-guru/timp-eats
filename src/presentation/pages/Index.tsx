@@ -14,7 +14,7 @@ const { Text } = Typography;
 
 const Index = () => {
   return (
-    <div>
+    <div className="main-div-container">
       <Flex
         className="head-flex-container"
         align="center"
@@ -25,7 +25,7 @@ const Index = () => {
           Contact us
         </Button>
       </Flex>
-      <Col span={24} style={{ textAlign: "center" }}>
+      <Col span={24} style={{ textAlign: "center", marginTop: 10 }}>
         <Text className="heading-text">Eat well, think well.</Text>
       </Col>
 

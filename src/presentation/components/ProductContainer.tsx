@@ -9,9 +9,12 @@ import Collapse, { CollapseProps } from "antd/lib/collapse";
 import { productInfo } from "../../domain/productInfo";
 import { productInfoInterface } from "../../domain/interfaces/productInfoInterface";
 
+import "./styles/productContainer.css"
+
 const { Text } = Typography;
 const ProductContainer = () => {
   const [quantity, setQuantity] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0)
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -24,11 +27,20 @@ const ProductContainer = () => {
         setQuantity(preQty => (preQty >= 0 ? preQty + 1 : preQty));
     }
   }
-
-  const productsAction = (name: string) => {
+   
+  const handlePrice = () => {
+    if(quantity === 250) {
+      setPrice(price)
+    } else if(quantity === 500) {
+      setPrice((price*2) - 20)
+    } else if(quantity === 1) {
+      setPrice((price*4) - 35)
+    }
+}
+  const productsAction = (name: string, price: number) => {
     return (
       <Flex align="center" justify="space-around">
-        <Text>{name}</Text>
+        <Text className="product-info">{name}</Text>
         <Select
           defaultValue="250"
           onChange={handleChange}
@@ -46,33 +58,37 @@ const ProductContainer = () => {
             <Button onClick={() => handleQty("add")}>+</Button>
           </Space.Compact>
         </Space>
+        <Text className="product-info">₹ {price} /-</Text>
       </Flex>
     );
   };
+  console.log(price, "-----------------")
+
+
 
   const items: CollapseProps["items"] = productInfo.map(
-    (product: productInfoInterface, index: number) => {
+    (product: productInfoInterface) => {
       return {
         key: product.id,
-        label: productsAction(product.name),
+        label: productsAction(product.name, product.price),
         children: product.ingredients,
       };
     }
   );
 
-  console.log(items);
-
   const onChange = (key: string | string[]) => {
-    console.log(key);
+    // console.log(key);
   };
 
   return (
-    <Col span={24}>
+    <Col span={24} style={{margin: 20}}>
+      <span id="ele1"></span>
       <Collapse
         items={items}
         expandIconPosition="right"
         defaultActiveKey={[]}
         onChange={onChange}
+        className="collapse-container"
       />
     </Col>
   );

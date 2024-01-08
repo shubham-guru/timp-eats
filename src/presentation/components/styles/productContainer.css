@@ -1,0 +1,31 @@
+.product-info {
+  font-family: "Jost", sans-serif;
+  font-weight: bold;
+  width: 100px;
+}
+.collapse-container {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+#ele1{
+    width: 1vmax;
+    height: 1.5vmax;
+    background: rgb(87, 230, 228);
+    padding: 2vmax;
+    border-radius: 50%;
+    position: absolute;
+    top: -5%;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    from {
+       transform: rotate(0deg);
+    }
+    to {
+       transform: rotate(360deg);
+    }
+ }

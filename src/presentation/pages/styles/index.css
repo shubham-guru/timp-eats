@@ -11,3 +11,10 @@
     font-family: 'Jost', sans-serif;
     font-style: italic;
 }
+.main-div-container{
+    background-image: url("../../../assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: cover;
+    height: 100vh;
+}
