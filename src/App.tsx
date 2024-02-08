@@ -1,14 +1,17 @@
-import React from 'react'
-import Index from './presentation/pages/Index'
-import './App.css'
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+import { Provider } from "react-redux";
+import { store } from "./redux/store/store";
 
 function App() {
-
   return (
-    <>
-      <Index />
-    </>
-  )
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Quattrocento+Sans&display=swap");
+
+.single-product-card {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 2%;
+  padding: 3vmax;
+}
+.product-primary-text {
+  font-size: 2.3vmax;
+  font-family: "Quattrocento Sans", sans-serif;
+  color: #444;
+}
+.product-secondary-text{
+  font-size: 1.7vmax;
+  margin-top: 1vmax;
+  font-family: "Jost", sans-serif;
+}
+.product-head-col {
+  display: flex;
+  justify-content: space-between;
+}
+.product-price-text {
+  font-size: 1.8vmax;
+  font-family: "Quattrocento Sans", sans-serif;
+  color: #000;
+}
+.product-img {
+  border-radius: 10px;
+}

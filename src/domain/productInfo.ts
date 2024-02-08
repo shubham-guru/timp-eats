@@ -1,3 +1,7 @@
+import bajraImg from "../assets/product images/bajraImg.jpg";
+import crunchyStick from "../assets/product images/crunchyStick.jpg";
+import chocoChip from "../assets/product images/chocoChipImg.jpg";
+
 export const productInfo = [
     {
         id: 1,
@@ -12,7 +16,9 @@ export const productInfo = [
         "Healthy saturated fats for energy and brain function",
         "Supports a healthy immune system and skin"],
         usage: ["Grab a bite before heading to work or college! Convenient and easy to eat, perfect for avoiding the morning rush."],
-        price: 209
+        price: 209,
+        isHandMade: true,
+        image: bajraImg
     },
     {
         id: 2,
@@ -26,11 +32,13 @@ export const productInfo = [
         "High in heart-healthy monounsaturated fats", 
         "Contains vitamin E, an antioxidant"],
         usage: ["Enjoy these with your morning tea or as a satisfying evening snack to curb those cravings."],
-        price: 189
+        price: 189,
+        isHandMade: false,
+        image: crunchyStick
     },
     {
         id: 3,
-        name: "Bajra Cookies",
+        name: "Choco Chip Bajra Cookies",
         ingredients: "Pearl Millet Flour, Sugar Powder(Boora), Butter, Cocoa Powder, Rising Agent",
         healthBenefits: ["Rich in fiber for digestive health", 
         "Gluten-free alternative for those with sensitivities", 
@@ -38,6 +46,8 @@ export const productInfo = [
         "Rich in antioxidants for overall health",
         "High in fiber, aiding in digestion and weight management"],
         usage: ["Incorporate them into your child's nutrition for added health benefits, fostering a connection with your little ones."],
-        price: 219
+        price: 219,
+        isHandMade: false,
+        image: chocoChip
     }
 ]
