@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface'
 
 export interface AddtoCartState {
@@ -18,20 +17,16 @@ export const addtoCartSlice = createSlice({
         const info = {
             img: action.payload.image,
             name: action.payload.name,
-            price: action.payload.price
+            totalPrice: action.payload.totalPrice,
+            quantity: action.payload.quantity,
+            units: action.payload.units
         }
         const product = {
             id: action.payload.id,
             productInfo: info
         }
       state.push(product)
-    },
-    // decrement: (state) => {
-    //   state.value -= 1
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload
-    // },
+    }
   },
 })
 

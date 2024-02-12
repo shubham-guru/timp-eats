@@ -1,6 +1,7 @@
 import bajraImg from "../assets/product images/bajraImg.jpg";
 import crunchyStick from "../assets/product images/crunchyStick.jpg";
 import chocoChip from "../assets/product images/chocoChipImg.jpg";
+// import nanKhatai from "../assets/product images/nanKhatai.jpg"
 
 export const productInfo = [
     {
