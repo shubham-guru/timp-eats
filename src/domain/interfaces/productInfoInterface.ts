@@ -6,7 +6,7 @@ export interface productInfoInterface {
     usage: Array<string>,
     isHandMade: boolean,
     price: number,
-    image: string,
+    img: string,
     units: number,
     totalPrice: number,
     quantity: number

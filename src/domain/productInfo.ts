@@ -19,7 +19,7 @@ export const productInfo = [
         usage: ["Grab a bite before heading to work or college! Convenient and easy to eat, perfect for avoiding the morning rush."],
         price: 209,
         isHandMade: true,
-        image: bajraImg
+        img: bajraImg
     },
     {
         id: 2,
@@ -35,7 +35,7 @@ export const productInfo = [
         usage: ["Enjoy these with your morning tea or as a satisfying evening snack to curb those cravings."],
         price: 189,
         isHandMade: false,
-        image: crunchyStick
+        img: crunchyStick
     },
     {
         id: 3,
@@ -49,6 +49,6 @@ export const productInfo = [
         usage: ["Incorporate them into your child's nutrition for added health benefits, fostering a connection with your little ones."],
         price: 219,
         isHandMade: false,
-        image: chocoChip
+        img: chocoChip
     }
 ]

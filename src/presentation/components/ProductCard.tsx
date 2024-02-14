@@ -1,13 +1,5 @@
 import React, { useState } from 'react'
-import Flex from "antd/lib/flex";
-import Image from "antd/lib/image";
-import Col from "antd/lib/col";
-import List from 'antd/lib/list';
-import Button from 'antd/lib/button';
-import message from 'antd/lib/message';
-import Modal from 'antd/lib/modal';
-import Select from 'antd/lib/select';
-import Divider from 'antd/lib/divider';
+import { Flex, Image, Col, List, Button, Modal, Select, Divider, message } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import Typography from "antd/lib/typography";
 import { useSelector, useDispatch } from 'react-redux'
@@ -47,7 +39,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
     const productData = {
         name: productInfo.name,
         id: productInfo.id,
-        image: productInfo.image,
+        image: productInfo.img,
         quantity: quantity,
         units: unit,
         totalPrice: ((productInfo.price / 250) * quantity) * unit
@@ -64,7 +56,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
       {contextHolder}
       <Flex justify="space-between">
         <Col span={4}>
-          <Image src={productInfo.image} alt={`${productInfo.name}-pic`} className="product-img" />
+          <Image src={productInfo.img} alt={`${productInfo.name}-pic`} className="product-img" />
         </Col>
 
         <Col span={19} className="product-head-col">

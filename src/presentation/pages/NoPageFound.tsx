@@ -1,6 +1,5 @@
 import React from 'react'
-import Col from 'antd/lib/col'
-import Typography from 'antd/lib/typography'
+import { Typography, Col } from "antd";
 import noData from "../../assets/noData.jpg"
 
 const NoPageFound = () => {

@@ -1,3 +1,43 @@
 .cart-page-row{
     padding: 3vmax;
 }
+.cart-heading-text{
+    font-size: 3vmax !important;
+    letter-spacing: 1px;
+}
+.cart-heading-subtitle{
+    font-size: 2vmax !important;
+    color: #444 !important;
+    font-weight: 100 !important;
+    letter-spacing: 2px !important;
+}
+.cart-product-details-col{
+    margin-top: 2vmax;
+}
+.product-details-col{
+    margin-top: 2vmax;
+    backdrop-filter: blur(11px) saturate(181%);
+  -webkit-backdrop-filter: blur(11px) saturate(181%);
+  background-color: rgba(211, 211, 211, 0.37);
+  border-radius: 12px;
+  border: 1px solid rgba(193, 193, 193, 0.302);
+  padding: 2vmax;
+}
+.cart-product-text{
+    margin: 2vmax;
+    font-size: 1.6vmax;
+}
+.action-btns{
+    padding: .5vmax;
+    margin: .5vmax;
+    border-radius: 50%;
+    background-color: #666;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+#delete-icon{
+    color: rgb(197, 56, 56);
+    font-size: 1.5vmax;
+    cursor: pointer;
+}

@@ -1,16 +1,11 @@
 import React from "react";
-import Flex from "antd/lib/flex";
-import Image from "antd/lib/image";
-import Button from "antd/lib/button";
-import Typography from "antd/lib/typography";
-import logo from "../../assets/logo.png";
-import Col from "antd/lib/col";
-import Badge from "antd/lib/badge";
+import { Flex, Image, Button, Typography, Col, Badge } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { RootState } from '../../redux/store/store';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import routes from "../../routes/routes";
+import logo from "../../assets/logo.png";
 import "./styles/index.css";
 
 const ProductContainer = React.lazy(() => import("../components/ProductContainer"));
