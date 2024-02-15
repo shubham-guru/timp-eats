@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import addtoCardSlice from '../slice/addtoCardSlice'
+import removeProductSlice from '../slice/removeProductSlice'
 
 export const store = configureStore({
   reducer: {
     products: addtoCardSlice,
+    removeProduct: removeProductSlice
   },
 })
 
