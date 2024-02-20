@@ -1,19 +1,20 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Index from '../presentation/pages/Index';
+import Cart from '../presentation/pages/Cart';
+import CheckOut from '../presentation/pages/CheckOut';
 import routes from './routes'
 
 const AppRoutes= () => {
 
-  const Index = React.lazy(() => import("../presentation/pages/Index"));
-  const Cart = React.lazy(() => import("../presentation/pages/Cart"));
-  const CheckOut = React.lazy(() => import("../presentation/pages/CheckOut"));
+  const LayoutPage = React.lazy(() => import("../presentation/pages/LayoutPage"));
   const NoPageFound = React.lazy(() => import("../presentation/pages/NoPageFound"));
 
   return (
     <Routes>
-      <Route path={routes.HOME} element={<Suspense fallback=""><Index /></Suspense>} />
-      <Route path={routes.CART} element={<Suspense fallback=""><Cart /></Suspense>} />
-      <Route path={routes.CHECKOUT} element={<Suspense fallback=""><CheckOut /></Suspense>} />
+      <Route path={routes.HOME} element={<Suspense fallback=""><LayoutPage Children={<Index />} /></Suspense>} />
+      <Route path={routes.CART} element={<Suspense fallback=""><LayoutPage Children={<Cart />} /></Suspense>} />
+      <Route path={routes.CHECKOUT} element={<Suspense fallback=""><LayoutPage Children={<CheckOut />} /></Suspense>} />
       <Route path="*" element={<NoPageFound />} />
     </Routes>
   )

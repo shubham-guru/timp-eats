@@ -5,7 +5,7 @@ import Typography from "antd/lib/typography";
 import { useSelector, useDispatch } from 'react-redux'
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface';
 import { RootState } from '../../redux/store/store';
-import { addProduct } from '../../redux/slice/addtoCardSlice';
+import { addProduct } from '../../redux/slice/cartSlice';
 import { quantities, units } from '../../domain/constants/modalValues';
 import "./styles/productCard.css"
 
@@ -13,7 +13,7 @@ type IProductCard = {
   productInfo: productInfoInterface
 }
 const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
-  const productObj = useSelector((state: RootState) => state.products)
+  const productObj = useSelector((state: RootState) => state.cartProducts)
 
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,7 +52,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
   }
 
   return (
-    <Col className="single-product-card">
+    <Col className="single-product-card" span={24}>
       {contextHolder}
       <Flex justify="space-between">
         <Col span={4}>
@@ -124,7 +124,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
           <Typography.Text>&#8377; {((productInfo.price / 250) * quantity) * unit}</Typography.Text>
         </Flex>
 
-        <Button className="primary-us-btn cart-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%" }} type="primary">Add</Button>
+        <Button className="primary-us-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%", backgroundColor: "#457b57d8" }} type="primary">Add</Button>
       </Modal>
 
     </Col>

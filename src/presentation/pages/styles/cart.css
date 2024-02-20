@@ -1,31 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap');
+
 .cart-page-row{
     padding: 3vmax;
+    width: 100%;
 }
 .cart-heading-text{
-    font-size: 3vmax !important;
+    font-size: 2.5vmax !important;
     letter-spacing: 1px;
+    font-family: "Montserrat", sans-serif;
 }
 .cart-heading-subtitle{
     font-size: 2vmax !important;
     color: #444 !important;
-    font-weight: 100 !important;
+    font-weight: 300 !important;
     letter-spacing: 2px !important;
 }
 .cart-product-details-col{
     margin-top: 2vmax;
 }
 .product-details-col{
-    margin-top: 2vmax;
+    margin: 2vmax;
     backdrop-filter: blur(11px) saturate(181%);
-  -webkit-backdrop-filter: blur(11px) saturate(181%);
-  background-color: rgba(211, 211, 211, 0.37);
-  border-radius: 12px;
-  border: 1px solid rgba(193, 193, 193, 0.302);
-  padding: 2vmax;
+    -webkit-backdrop-filter: blur(11px) saturate(181%);
+    background-color: rgba(211, 211, 211, 0.37);
+    border-radius: 12px;
+    border: 1px solid rgba(193, 193, 193, 0.302);
+    padding: 2vmax;
 }
 .cart-product-text{
     margin: 1vmax;
     font-size: 1.6vmax;
+    font-family: "Montserrat", sans-serif;
 }
 .action-btns{
     padding: .3vmax;
@@ -43,4 +49,13 @@
 .delete-modal-text{
     font-size: 1vmax;
     margin: 2vmax !important;
+}
+.cart-btn{
+    width: 100%;
+    padding: 2vmax;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3vmax;
+    background: rgba(3, 91, 31, 0.699) !important;
 }

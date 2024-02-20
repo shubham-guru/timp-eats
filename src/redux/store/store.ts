@@ -1,12 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit'
-import addtoCardSlice from '../slice/addtoCardSlice'
-import removeProductSlice from '../slice/removeProductSlice'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import cartSlice from '../slice/cartSlice';
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+}
+
+const reducer = combineReducers({
+  cartProducts: cartSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
-  reducer: {
-    products: addtoCardSlice,
-    removeProduct: removeProductSlice
-  },
+  reducer: persistedReducer
 })
 
 export type RootState = ReturnType<typeof store.getState>

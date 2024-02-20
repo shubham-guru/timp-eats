@@ -39,9 +39,8 @@ const ProductContainer = () => {
 
   return (
     <Col span={24} style={{margin: 20}}>
-      {/* <span id="ele1"></span> */}
       {
-        productInfo.map((item: productInfoInterface, index: number) => {
+        productInfo.map((item: any, index: number) => {
           return(
             <ProductCard productInfo={item} key={index}/>
           )
