@@ -4,6 +4,39 @@
     font-size: 1vmax;
     font-family: "Montserrat", sans-serif;
 }
-.checkout-form-col{
-    /* background-color: antiquewhite; */
+.checkout-divider{
+    width: 1px;
+    height: 50vh !important;
+    background-color: #ddd;
+}
+.checkout-note{
+    text-align: center;
+    color: #c8c8c8;
+    font-family: "Montserrat", sans-serif;
+    background-color: #333;
+    margin: auto;
+    padding: .2vmax .6vmax;
+    border-radius: 3px;
+}
+
+/* Order Summary */
+.order-summary-main-col{
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 1vmax;
+    width: 100%;
+}
+.order-summary-table-heading{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1vmax;
+}
+.order-summary-flex{
+    margin-top: 3%;
+}
+.order-summary-footer-text{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2vmax;
+}
+.free-del-text{
+    color: rgb(6, 93, 6);
 }

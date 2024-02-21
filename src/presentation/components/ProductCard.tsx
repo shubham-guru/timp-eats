@@ -16,8 +16,9 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
   const productObj = useSelector((state: RootState) => state.cartProducts)
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(250);
+  const [qtyLabel, setQtyLabel] = useState<string>("250g");
   const [unit, setUnit] = useState<number>(1);
 
   const dispatch = useDispatch()
@@ -40,7 +41,8 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
         name: productInfo.name,
         id: productInfo.id,
         image: productInfo.img,
-        quantity: quantity,
+        quantity: qtyLabel.includes("kg") ? quantity/1000 : quantity,
+        qtyLabel: qtyLabel,
         units: unit,
         totalPrice: ((productInfo.price / 250) * quantity) * unit
     }
@@ -50,7 +52,6 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
       handleCancel();
     }
   }
-
   return (
     <Col className="single-product-card" span={24}>
       {contextHolder}
@@ -99,7 +100,10 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
           <Select
             defaultValue="250"
             style={{ width: 120 }}
-            onChange={(value: string) => setQuantity(Number(value))}
+            onChange={(value: string, options: any) => {
+              setQtyLabel(options.label)
+              setQuantity(Number(value))}
+            }
             options={quantities}
           />
         </Flex>

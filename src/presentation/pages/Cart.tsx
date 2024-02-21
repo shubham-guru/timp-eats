@@ -8,6 +8,7 @@ import routes from '../../routes/routes';
 import { useNavigate } from 'react-router-dom';
 import { removeProduct } from '../../redux/slice/cartSlice';
 import emptyCart from "../../assets/cart.png"
+import { calculateTotalPrice } from '../../data/helpers/totalPrice';
 import "./styles/cart.css"
 
 
@@ -15,7 +16,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const productObj = useSelector((state: RootState) => state.cartProducts.productDetails)
-    const [units, setUnits] = useState<number>();
     const [productId, setProductId] = useState<number>()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [messageApi, contextHolder] = message.useMessage();
@@ -43,10 +43,7 @@ const Cart = () => {
         setIsModalOpen(false);
     };
 
-    const tempArr = productObj?.map((item: { productInfo: { totalPrice: number } }) => {
-        return item.productInfo.totalPrice
-    })
-    const totalPrice = tempArr.reduce((total: number, number: number) => total + number, 0);
+    const totalPrice = calculateTotalPrice(productObj)
 
 
     return (
@@ -60,12 +57,20 @@ const Cart = () => {
                                 <Typography.Title className="cart-heading-text">Cart</Typography.Title>
                             </Col>
                             <Col span={12}>
-                                <Typography.Title className="cart-heading-text" style={{ textAlign: "right" }}>Total: &#8377;{totalPrice}</Typography.Title>
+                                <Typography.Title className="cart-heading-text" style={{ textAlign: "right" }}>Total: {totalPrice.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'INR'
+                                })}</Typography.Title>
                             </Col>
                         </Row>
 
                         <Col span={24} className="cart-product-details-col">
-                            <Typography.Title className="cart-heading-subtitle">Product Details</Typography.Title>
+                            <Flex align="center" justify="space-between">
+                                <Typography.Title className="cart-heading-subtitle">Product Details</Typography.Title>
+                                <Button className="primary-us-btn"
+                                    onClick={() => navigate(routes.CHECKOUT)}
+                                    type="primary">Checkout <ArrowRightOutlined /></Button>
+                            </Flex>
                             {
                                 productObj?.map((item: { productInfo: productInfoInterface, id: number }, index: number) => {
                                     return (
@@ -75,13 +80,13 @@ const Cart = () => {
                                                 <Typography.Text className="cart-product-text">{item?.productInfo.name}</Typography.Text>
                                                 <Flex align="center">
                                                     {/* <PlusOutlined className="action-btns" onClick={() => handleUnitChange("add", units ? units : item.productInfo.units)} /> */}
-                                                    <Typography.Text className="cart-product-text">{units ? units : item.productInfo.units} {item.productInfo.units < 1 ? "Units" : "Unit"}</Typography.Text>
+                                                    <Typography.Text className="cart-product-text">{item.productInfo.units} {item.productInfo.units > 1 ? "Units" : "Unit"}</Typography.Text>
                                                     {/* <MinusOutlined className="action-btns" onClick={() => handleUnitChange("minus", units ? units : item.productInfo.units)} /> */}
                                                 </Flex>
 
                                                 <Flex align="center">
                                                     {/* <PlusOutlined className="action-btns" /> */}
-                                                    <Typography.Text className="cart-product-text">{item.productInfo.quantity} Qty</Typography.Text>
+                                                    <Typography.Text className="cart-product-text">{item.productInfo.quantity} {item.productInfo.qtyLabel.includes("kg") ? "kg" : "g"}</Typography.Text>
                                                     {/* <MinusOutlined className="action-btns" /> */}
                                                 </Flex>
 

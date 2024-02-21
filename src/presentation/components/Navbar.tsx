@@ -20,19 +20,23 @@ const Navbar: React.FC<INavBar> = ({ isCart = true }) => {
       className="head-flex-container"
       align="center"
       justify="space-between">
-      <Image preview={false} src={logo} width={120} />
+      <Image preview={false} src={logo} width={120} onClick={() => navigate(routes.HOME)} />
       <Flex gap={20}>
-        <Button className="primary-us-btn" type="primary">
-          Contact us
-        </Button>
-        {
+      {
           isCart ?
             <Badge count={productObj?.length}>
               <Button className="primary-us-btn" onClick={() => navigate(routes.CART)} type="primary" icon={<ShoppingCartOutlined />}>
                 Cart
               </Button>
-            </Badge> : null
+            </Badge> : 
+            <Button className="primary-us-btn" onClick={() => navigate(routes.HOME)} type="primary">
+                Shop
+              </Button>
         }
+        <Button className="primary-us-btn" type="primary">
+          Contact us
+        </Button>
+        
       </Flex>
     </Flex>
     </Affix>

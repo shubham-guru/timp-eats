@@ -51,8 +51,9 @@
     margin: 2vmax !important;
 }
 .cart-btn{
-    width: 100%;
-    padding: 2vmax;
+    width: 60%;
+    padding: 1.3vmax;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;

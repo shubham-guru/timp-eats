@@ -14,6 +14,7 @@ export const cartSlice = createSlice({
         name: action.payload.name,
         totalPrice: action.payload.totalPrice,
         quantity: action.payload.quantity,
+        qtyLabel: action.payload.qtyLabel,
         units: action.payload.units
       };
       const product = {

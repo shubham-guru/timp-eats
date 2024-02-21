@@ -9,5 +9,6 @@ export interface productInfoInterface {
     img: string,
     units: number,
     totalPrice: number,
-    quantity: number
+    quantity: number,
+    qtyLabel: string
 }
