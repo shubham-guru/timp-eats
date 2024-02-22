@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Row, Typography, Image, Flex, Modal, Divider, Button, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/store/store';

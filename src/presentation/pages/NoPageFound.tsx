@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography, Col } from "antd";
 import noData from "../../assets/noData.jpg"
 

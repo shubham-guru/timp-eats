@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Divider, Flex, Row, Typography, Image } from 'antd'
 import facebook from "../../assets/facebook.svg"
 import insta from "../../assets/instagram.svg"

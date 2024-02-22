@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Table, Typography, Flex, Divider } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
