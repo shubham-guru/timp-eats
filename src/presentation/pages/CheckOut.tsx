@@ -58,13 +58,14 @@ const CheckOut = () => {
     <Row gutter={[0, 20]}>
       {contextHolder}
       <Typography.Text className="checkout-note">Don't think too much, you are ordering health</Typography.Text>
-      <Col span={24}>
-        <Typography.Title className="checkout-head-text" style={{ marginLeft: "3%" }}>Enter Address</Typography.Title>
-      </Col>
+      {/* <Col span={24}> */}
+      {/* </Col> */}
 
       <Col span={24}>
         <Row justify="space-around">
           <Col span={10} className="checkout-form-col">
+          <Typography.Title className="checkout-head-text">Enter Address</Typography.Title>
+            {/* Address Form */}
             <Form form={form} layout='vertical' autoComplete='off' onFinish={handleSubmit}>
 
               <Flex align='center' justify="space-between">
@@ -141,12 +142,14 @@ const CheckOut = () => {
 
             <div className="checkout-divider" />
 
-          <Col span={8}>
-            <Typography.Title className="checkout-head-text" style={{textAlign: "center"}}>Order Summary</Typography.Title>
+          {/* Order Summary Card */}
+          <Col span={9}>
+            <Typography.Title className="checkout-head-text">Order Summary</Typography.Title>
             <Col span={24}>
                 <Suspense fallback=""><OrderSummary /></Suspense>
             </Col>
           </Col>
+
         </Row>
       </Col>
     </Row>

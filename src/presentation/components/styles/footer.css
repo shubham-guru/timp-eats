@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap');
+
+.footer-row{
+    padding: 2vmax;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin-bottom: 2%;
+}
+.footer-title{
+    color: #000000 !important;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.7vmax !important;
+}
+.footer-subtitle{
+    color: #333;
+}
+.icon-img{
+    cursor: pointer;
+}
+.footer-link-text{
+    color: #333 !important;
+}

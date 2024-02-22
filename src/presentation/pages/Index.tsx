@@ -1,19 +1,18 @@
 import React from "react";
-import { Typography, Col } from "antd";
+import { Typography, Col, Row } from "antd";
 import "./styles/index.css";
 
 const ProductContainer = React.lazy(() => import("../components/ProductContainer"));
-const { Text } = Typography;
 
 const Index = () => {
 
   return (
-    <div className="main-div-container">
-      <Col span={24} style={{ textAlign: "center", marginTop: 10 }}>
-        <Text className="heading-text">Eat well, think well.</Text>
+    <Row>
+      <Col span={24} style={{ marginTop: 10 }}>
+        <Typography.Text className="heading-text">Eat well, think well.</Typography.Text>
+        <ProductContainer />
       </Col>
-      <ProductContainer />
-    </div>
+    </Row>
   );
 };
 
