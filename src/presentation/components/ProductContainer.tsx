@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Col from "antd/lib/col";
 import { productInfo } from "../../domain/productInfo";
 
 import "./styles/productContainer.css"
 
 const ProductContainer = () => {
-
   const ProductCard = React.lazy(() => import("./ProductCard"))
 
   return (
@@ -13,7 +12,7 @@ const ProductContainer = () => {
       {
         productInfo.map((item: any, index: number) => {
           return (
-            <ProductCard productInfo={item} key={index} />
+            <Suspense fallback=""><ProductCard productInfo={item} key={index} /></Suspense>
           )
         })
       }

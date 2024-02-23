@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import { Button, Col, Flex, Form, Input, Row, Typography, message } from 'antd'
+import { Col, Flex, Form, Input, Row, Typography, message } from 'antd'
 import PhoneInput, { Country } from 'react-phone-number-input'
 import { FetchData } from '../../data/Apis/FetchData'
 import { LoadingOutlined } from "@ant-design/icons"
@@ -16,9 +16,9 @@ const CheckOut = () => {
     name: "",
     address: "",
     pincode: "",
-    landmark: ""
+    landmark: "",
+    phone: ""
   })
-  const [phone, setPhone] = useState<string>();
   const [pinCodeResult, setPinCodeResult] = useState<Array<pinCodeData>>([]);
   const [countryCode, setCountryCode] = useState("IN");
   const [loading, setLoading] = useState<boolean>(false);
@@ -49,18 +49,14 @@ const CheckOut = () => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(formValues)
-    console.log(phone)
   }
 
   return (
     <Row gutter={[0, 20]}>
       {contextHolder}
       <Typography.Text className="checkout-note">Don't think too much, you are ordering health</Typography.Text>
-      {/* <Col span={24}> */}
-      {/* </Col> */}
-
       <Col span={24}>
         <Row justify="space-around">
           <Col span={10} className="checkout-form-col">
@@ -85,8 +81,8 @@ const CheckOut = () => {
                   <PhoneInput
                     addInternationalOption={false}
                     defaultCountry="IN"
-                    value={phone}
-                    onChange={(value) => setPhone(value)}
+                    value={formValues.phone}
+                    onChange={(value: string) => setFormValues({ ...formValues, phone: value })}
                     onCountryChange={(countryData: Country) => setCountryCode(countryData)}
                   />
                 </Form.Item>
@@ -134,9 +130,9 @@ const CheckOut = () => {
               </Form.Item>
 
               {/* Submit Button */}
-              <Form.Item>
+              {/* <Form.Item>
                 <Button type="primary" htmlType="submit">Submit</Button>
-              </Form.Item>
+              </Form.Item> */}
             </Form>
           </Col>
 
@@ -146,7 +142,7 @@ const CheckOut = () => {
           <Col span={9}>
             <Typography.Title className="checkout-head-text">Order Summary</Typography.Title>
             <Col span={24}>
-                <Suspense fallback=""><OrderSummary /></Suspense>
+                <Suspense fallback=""><OrderSummary userData={formValues} /></Suspense>
             </Col>
           </Col>
 

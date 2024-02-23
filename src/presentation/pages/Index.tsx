@@ -1,8 +1,7 @@
-import React from "react";
 import { Typography, Col, Row } from "antd";
+import ProductContainer from "../components/ProductContainer";
 import "./styles/index.css";
 
-const ProductContainer = React.lazy(() => import("../components/ProductContainer"));
 
 const Index = () => {
 

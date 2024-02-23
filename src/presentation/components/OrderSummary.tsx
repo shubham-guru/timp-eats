@@ -1,11 +1,17 @@
-import { Col, Table, Typography, Flex, Divider } from 'antd'
+import { Col, Table, Typography, Flex, Divider, Button } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface'
 import { calculateTotalPrice } from '../../data/helpers/totalPrice'
+import { formUserDataInterface } from '../../domain/interfaces/formUserDataInterface'
+import axios from 'axios'
 
-const OrderSummary = () => {
-    const productObj = useSelector((state: RootState) => state.cartProducts.productDetails)
+type IOrderSummaryType = {
+    userData: formUserDataInterface
+}
+const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
+    console.log("🚀 ~ userData:", userData)
+    const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
 
     const productsData = productObj.map((item: { productInfo: productInfoInterface }, index: number) => {
         return {
@@ -20,7 +26,7 @@ const OrderSummary = () => {
     const totalPrice = calculateTotalPrice(productObj);
 
     // Calculating Total Qty of Products in KGs
-    const totalQty: any[] = productObj?.map((item: any) => {
+    const totalQty: any[] = productObj?.map((item: { productInfo: productInfoInterface }) => {
         if (item.productInfo.qtyLabel.includes("kg")) {
             const qty = item.productInfo.qtyLabel.split("kg")[0];
             const total = Number(qty)
@@ -60,6 +66,50 @@ const OrderSummary = () => {
         },
     ];
 
+    const calculatePriceWithDelivery = () => {
+        const checkoutAmt = (quantitySum > 1 ? totalPrice : totalPrice + 45).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'INR'
+        })
+        return checkoutAmt
+    }
+
+    const handleCheckout = async () => {
+        const { data: { key } } = await axios.get("http://www.localhost:4000/api/getkey");
+
+        const str = calculatePriceWithDelivery();
+        const numericPart = str.match(/\d+(\.\d+)?/);
+        const totalAmt = parseFloat(numericPart[0]);
+
+        const { data: { order } } = await axios.post("http://localhost:4000/api/checkout", {
+            amount : totalAmt
+        })
+
+        const options = {
+            key,
+            amount: order.amount,
+            currency: "INR",
+            name: "Timp Eats",
+            description: "Payment for order",
+            image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+            order_id: order.id,
+            callback_url: "http://localhost:4000/api/paymentverification",
+            prefill: {
+                name: userData.name,
+                email: "",
+                contact: userData.phone
+            },
+            notes: {
+                "address": "Razorpay Corporate Office"
+            },
+            theme: {
+                "color": "#121212"
+            }
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
+    }
+
     const dataSource = productsData;
 
     return (
@@ -73,13 +123,10 @@ const OrderSummary = () => {
             <Flex className="order-summary-flex" justify="space-between">
                 <Typography.Text className="order-summary-footer-text">Total</Typography.Text>
                 <Typography.Text className="order-summary-footer-text">
-                    {(quantitySum > 1 ? totalPrice : totalPrice + 45).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'INR'
-                    })}
+                    {calculatePriceWithDelivery()}
                 </Typography.Text>
-            </Flex>
-
+            </Flex> <br />
+            <Button type="primary" className="primary-us-btn cart-btn" onClick={handleCheckout}>Pay & Checkout</Button>
 
         </Col>
     )
