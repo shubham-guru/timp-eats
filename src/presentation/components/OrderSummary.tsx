@@ -106,6 +106,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                 "color": "#121212"
             }
         };
+        console.log("🚀 ~ handleCheckout ~ options:", options)
         // const razor = new window.Razorpay(options);
         // razor.open();
     }
