@@ -1,5 +1,5 @@
 import { Button, Flex, Typography } from 'antd'
-import SuccessIcon from '../../hocs/successIcon'
+import SuccessIcon from '../../hocs/SuccessIcon'
 import { LeftCircleOutlined } from "@ant-design/icons"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
