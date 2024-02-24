@@ -3,7 +3,7 @@ import { Col, Row, Typography } from 'antd'
 const PrivacyPolicy = () => {
   return (
     <Row>
-        <Col style={{marginBottom: "2%"}}>
+        <Col style={{marginBottom: "2%", padding: "2vmax"}} className="glassmorphism-effect">
             <Typography.Title className="pp-title-text">Privacy Policy</Typography.Title>
             <Typography.Text>
                 Timp Eats is committed to protecting your privacy. 
