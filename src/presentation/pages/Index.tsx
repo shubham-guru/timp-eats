@@ -8,7 +8,7 @@ const Index = () => {
   return (
     <Row>
       <Col span={24} style={{ marginTop: 10 }}>
-        <Typography.Text className="heading-text">Eat well, think well.</Typography.Text>
+        <Typography.Text className="heading-text glassmorphism-effect">Eat well, think well.</Typography.Text>
         <ProductContainer />
       </Col>
     </Row>

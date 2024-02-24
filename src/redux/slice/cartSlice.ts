@@ -32,12 +32,15 @@ export const cartSlice = createSlice({
       } else {
         console.log("Product not found!");
       }
+    },
+    removeAllProducts: (state) => {
+      state.productDetails = []
     }
   },
 });
 
 
 // Action creators are generated for each case reducer function
-export const { addProduct, removeProduct } = cartSlice.actions
+export const { addProduct, removeProduct, removeAllProducts } = cartSlice.actions
 
 export default cartSlice.reducer

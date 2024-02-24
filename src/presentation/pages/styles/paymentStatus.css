@@ -1,0 +1,11 @@
+.payment-status-flex{
+    flex-direction: column;
+    width: 20%;
+    text-align: center;
+    margin: 2vmax auto;
+    padding: 2vmax;
+}
+.payment-success-head{
+    color: #222;
+    font-family: "Jost", sans-serif;
+}

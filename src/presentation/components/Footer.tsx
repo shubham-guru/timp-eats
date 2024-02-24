@@ -8,9 +8,9 @@ import routes from '../../routes/routes'
 
 const Footer = () => {
     return (
-        <Row className="footer-row">
+        <Row className="footer-row glassmorphism-effect">
             <Flex justify="space-between" align="center" gap={10}>
-                <Col span={8}>
+                <Col span={8} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
                     <Typography.Title className="footer-title">About us</Typography.Title>
                     <Typography.Text className="footer-subtitle">Our goal isn't just about selling products and making money. We're focused on something bigger:
                         making sure everyone plays a role in improving society. We believe that when people eat well, they're better able
@@ -18,7 +18,7 @@ const Footer = () => {
                         If you can't eat well, how can you think well ?</Typography.Text>
                 </Col>
 
-                <Col span={8}>
+                <Col span={8} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
                     <Typography.Title className="footer-title">Yes we are Expensive</Typography.Title>
                     <Typography.Text className="footer-subtitle">
                         If you also believe that we are EXPENSIVE, then this one is for you, my friend. Yes, we are expensive! But why? Because health
@@ -30,7 +30,7 @@ const Footer = () => {
                     </Typography.Text>
                 </Col>
 
-                <Col span={8}>
+                <Col span={8} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
                     <Typography.Title className="footer-title">Eat well = Think well</Typography.Title>
                     <Typography.Text className="footer-subtitle">
                         This company believes in a simple idea: "Good food equals good thinking." We're convinced that when you eat well, you think well.

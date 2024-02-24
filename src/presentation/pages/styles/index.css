@@ -1,7 +1,9 @@
 .heading-text {
   font-size: 2vmax;
   font-family: "Jost", sans-serif;
+  width: 40%;
   display: flex;
   justify-content: center;
   font-style: italic;
+  margin: auto;
 }

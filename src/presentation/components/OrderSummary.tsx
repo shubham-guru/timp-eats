@@ -1,17 +1,18 @@
-import { Col, Table, Typography, Flex, Divider, Button } from 'antd'
+import { Col, Table, Typography, Flex, Divider, Button, message } from 'antd'
+import axios from 'axios'
 import { useSelector } from 'react-redux'
+import logo from "../../assets/logo.png"
 import { RootState } from '../../redux/store/store'
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface'
 import { calculateTotalPrice } from '../../data/helpers/totalPrice'
 import { formUserDataInterface } from '../../domain/interfaces/formUserDataInterface'
-import axios from 'axios'
 
 type IOrderSummaryType = {
     userData: formUserDataInterface
 }
 const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
-    console.log("🚀 ~ userData:", userData)
     const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
+    const [messageApi, contextHolder] = message.useMessage();
 
     const productsData = productObj.map((item: { productInfo: productInfoInterface }, index: number) => {
         return {
@@ -75,46 +76,56 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
     }
 
     const handleCheckout = async () => {
-        const { data: { key } } = await axios.get("http://www.localhost:4000/api/getkey");
+        const isData = Object.values(userData)
+        const allValuesFilled = isData.every(value => value.trim() !== '');
 
-        const str = calculatePriceWithDelivery();
-        const numericPart = str.match(/\d+(\.\d+)?/);
-        const totalAmt = parseFloat(numericPart[0]);
+        if(allValuesFilled){
+            const { data: { key } } = await axios.get("http://www.localhost:4000/api/getkey");
 
-        const { data: { order } } = await axios.post("http://localhost:4000/api/checkout", {
-            amount : totalAmt
-        })
+            const str = calculatePriceWithDelivery();
+            const numberString = str.replace(/[^\d.]/g, '');
+            const totalAmt = parseFloat(numberString);
+            console.log("🚀 ~ handleCheckout ~ totalAmt:", totalAmt)
+    
+            const { data: { order } } = await axios.post("http://localhost:4000/api/checkout", {
+                amount : totalAmt
+            })
+    
+            const options = {
+                key,
+                amount: order.amount,
+                currency: "INR",
+                name: "Timp Eats",
+                description: "Payment for order",
+                image: logo,
+                order_id: order.id,
+                callback_url: "http://localhost:4000/api/paymentverification",
+                prefill: {
+                    name: userData.name,
+                    email: userData.email,
+                    contact: userData.phone
+                },
+                notes: {
+                    "address": "Razorpay Corporate Office"
+                },
+                theme: {
+                    "color": "#121212"
+                }
+            };
+            const razor = (window as any).Razorpay(options)
+            razor.open();
+        } else {
+            messageApi.error("Kindly fill all the details in the form")
+        }
 
-        const options = {
-            key,
-            amount: order.amount,
-            currency: "INR",
-            name: "Timp Eats",
-            description: "Payment for order",
-            image: "https://avatars.githubusercontent.com/u/25058652?v=4",
-            order_id: order.id,
-            callback_url: "http://localhost:4000/api/paymentverification",
-            prefill: {
-                name: userData.name,
-                email: "",
-                contact: userData.phone
-            },
-            notes: {
-                "address": "Razorpay Corporate Office"
-            },
-            theme: {
-                "color": "#121212"
-            }
-        };
-        console.log("🚀 ~ handleCheckout ~ options:", options)
-        // const razor = new window.Razorpay(options);
-        // razor.open();
+       
     }
 
     const dataSource = productsData;
 
     return (
-        <Col className="order-summary-main-col">
+        <Col className="order-summary-main-col glassmorphism-effect">
+            {contextHolder}
             <Table dataSource={dataSource} columns={columns} pagination={false} />
             <Flex className="order-summary-flex" justify="space-between">
                 <Typography.Text className="order-summary-footer-text">Delivery</Typography.Text>

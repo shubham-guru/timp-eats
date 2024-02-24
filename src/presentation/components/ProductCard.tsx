@@ -8,6 +8,7 @@ import { RootState } from '../../redux/store/store';
 import { addProduct } from '../../redux/slice/cartSlice';
 import { quantities, units } from '../../domain/constants/modalValues';
 import "./styles/productCard.css"
+import HeartIcon from '../../hocs/HeartIcon';
 
 type IProductCard = {
   productInfo: productInfoInterface
@@ -53,7 +54,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
     }
   }
   return (
-    <Col className="single-product-card" span={24}>
+    <Col className="single-product-card glassmorphism-effect" span={24}>
       {contextHolder}
       <Flex justify="space-between">
         <Col span={4}>
@@ -66,15 +67,15 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
               <Typography className="product-primary-text">{productInfo.name}</Typography>
               <Button type='link' className="add-to-cart-btn" onClick={showModal} icon={<ShoppingCartOutlined />}>Add to cart</Button>
             </Flex>
-            <Typography.Text className="product-secondary-text" type='secondary' italic>Ingredients : <Typography.Text>{productInfo.ingredients}</Typography.Text>
+            <Typography.Text className="product-secondary-text" type='secondary' italic>Ingredients : <Typography.Text className="product-tertiary-text">{productInfo.ingredients} & <HeartIcon /> </Typography.Text>
             </Typography.Text> <br /> <br />
-            <Typography.Text className="product-secondary-text" type='secondary' italic>Usage : <Typography.Text mark>{productInfo.usage}</Typography.Text>
+            <Typography.Text className="product-secondary-text" type='secondary' italic>Usage : <Typography.Text mark className="product-tertiary-text">{productInfo.usage}</Typography.Text>
             </Typography.Text> <br /> <br />
             <Typography.Text className="product-secondary-text" type='secondary' italic>Health Benefits :
               <List
                 dataSource={productInfo.healthBenefits}
                 renderItem={(item) => (
-                  <List.Item>
+                  <List.Item className="product-tertiary-text">
                     {item}
                   </List.Item>
                 )}
@@ -128,7 +129,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
           <Typography.Text>&#8377; {((productInfo.price / 250) * quantity) * unit}</Typography.Text>
         </Flex>
 
-        <Button className="primary-us-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%", backgroundColor: "#457b57d8" }} type="primary">Add</Button>
+        <Button className="primary-us-btn cart-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%", backgroundColor: "#457b57d8" }} type="primary">Add</Button>
       </Modal>
 
     </Col>

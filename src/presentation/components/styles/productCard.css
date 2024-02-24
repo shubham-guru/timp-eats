@@ -1,11 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Quattrocento+Sans&display=swap");
 
 .single-product-card {
-  backdrop-filter: blur(11px) saturate(181%);
-  -webkit-backdrop-filter: blur(11px) saturate(181%);
-  background-color: rgba(255, 255, 255, 0.63);
-  border-radius: 12px;
-  border: 1px solid rgba(193, 193, 193, 0.302);
   margin-bottom: 2%;
   padding: 3vmax;
 }
@@ -22,6 +17,9 @@
   font-family: "Jost", sans-serif;
 }
 
+.product-tertiary-text{
+  font-size: 1vmax;
+}
 .product-head-col {
   display: flex;
   justify-content: space-between;

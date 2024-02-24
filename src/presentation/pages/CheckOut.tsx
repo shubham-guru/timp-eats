@@ -14,6 +14,7 @@ const CheckOut = () => {
   const OrderSummary = React.lazy(() => import("../components/OrderSummary"));
   const [formValues, setFormValues] = useState({
     name: "",
+    email: "",
     address: "",
     pincode: "",
     landmark: "",
@@ -49,7 +50,7 @@ const CheckOut = () => {
     }
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     console.log(formValues)
   }
 
@@ -62,15 +63,15 @@ const CheckOut = () => {
           <Col span={10} className="checkout-form-col">
           <Typography.Title className="checkout-head-text">Enter Address</Typography.Title>
             {/* Address Form */}
-            <Form form={form} layout='vertical' autoComplete='off' onFinish={handleSubmit}>
 
+            <Form form={form} layout='vertical' autoComplete='off' onFinish={handleSubmit}>
               <Flex align='center' justify="space-between">
                 {/* Full Name */}
                 <Form.Item label="Full Name"
                   required style={{ width: "40%" }}
                   rules={[{ required: true, message: 'Please input your FullName!' }]}
                 >
-                  <Input onChange={(e) => setFormValues({ ...formValues, name: e.target.value })} />
+                  <Input placeholder="Full Name" onChange={(e) => setFormValues({ ...formValues, name: e.target.value })} />
                 </Form.Item>
 
                 {/* Phone Number */}
@@ -88,6 +89,13 @@ const CheckOut = () => {
                 </Form.Item>
               </Flex>
 
+              {/* Email */}
+              <Form.Item label="Email Address" required
+                rules={[{ required: true, message: 'Please input your Email!' }]}
+              >
+                <Input placeholder="Email" onChange={(e) => setFormValues({ ...formValues, email: e.target.value })} />
+              </Form.Item>
+
               {/* Address */}
               <Form.Item label="Complete Address" required
                 rules={[{ required: true, message: 'Please input your Address!' }]}
@@ -96,7 +104,9 @@ const CheckOut = () => {
               </Form.Item>
 
               {/* LandMark */}
-              <Form.Item label="Landmark (optional)">
+              <Form.Item label="Landmark" required 
+               rules={[{ required: true, message: 'Please input your Landmark!' }]}
+              >
                 <Input placeholder="Any nearby post office, market, Hospital as the landmark"
                   onChange={(e) => setFormValues({ ...formValues, landmark: e.target.value })}
                 />
@@ -108,32 +118,29 @@ const CheckOut = () => {
                   rules={[{ required: true, message: 'Please input your Pincode!' }]}
                 >
                   <Flex align='center' gap={5}>
-                    <Input type="number" value={formValues.pincode} name="pincode" onChange={handlePinCode} />
+                    <Input type="number" placeholder="Pin Code" value={formValues.pincode} name="pincode" onChange={handlePinCode} />
                     {loading && <LoadingOutlined />}
                   </Flex>
                 </Form.Item>
 
                 {/* City */}
                 <Form.Item label="City" required>
-                  <Input readOnly value={pinCodeResult[0]?.district} />
+                  <Input placeholder="City" readOnly value={pinCodeResult[0]?.district} />
                 </Form.Item>
 
                 {/* State */}
                 <Form.Item label="State" required>
-                  <Input readOnly value={pinCodeResult[0]?.state} />
+                  <Input readOnly placeholder="State" value={pinCodeResult[0]?.state} />
                 </Form.Item>
               </Flex>
 
               {/* Country */}
               <Form.Item label="Country" required>
-                <Input readOnly value={pinCodeResult[0]?.country} />
+                <Input readOnly placeholder="Country" value={pinCodeResult[0]?.country} />
               </Form.Item>
-
-              {/* Submit Button */}
-              {/* <Form.Item>
-                <Button type="primary" htmlType="submit">Submit</Button>
-              </Form.Item> */}
             </Form>
+
+            
           </Col>
 
             <div className="checkout-divider" />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Flex, Button, Badge, Image, Affix } from 'antd'
 import routes from "../../routes/routes";
@@ -12,15 +12,37 @@ type INavBar = {
   isCart?: boolean
 }
 const Navbar: React.FC<INavBar> = ({ isCart = true }) => {
-  const productObj = useSelector((state: RootState) => state.cartProducts.productDetails)
+  const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
+  const innerWidth = window.innerWidth;
+
+  const [imageWidth, setImageWidth] = useState<number>(120); // Initial width of the image
+  const aspectRatio = 120 / innerWidth; 
+
+  useEffect(() => {
+    const handleResize = () => {
+      const innerWidth = window.innerWidth;
+      const newImageWidth = innerWidth * aspectRatio;
+      setImageWidth(newImageWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [aspectRatio, innerWidth]);
+
+  
   const navigate = useNavigate();
   return (
     <Affix offsetTop={0}>
     <Flex
-      className="head-flex-container"
+      className="head-flex-container glassmorphism-effect"
       align="center"
       justify="space-between">
-      <Image preview={false} className="icon-img" src={logo} width={120} onClick={() => navigate(routes.HOME)} />
+      <Image preview={false} className="icon-img" src={logo} width={imageWidth} onClick={() => navigate(routes.HOME)} />
       <Flex gap={20}>
       {
           isCart ?
