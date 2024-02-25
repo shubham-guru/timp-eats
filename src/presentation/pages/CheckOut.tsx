@@ -1,5 +1,6 @@
-import React, { Suspense, useState } from 'react'
+import { useState } from 'react'
 import { Col, Flex, Form, Input, Row, Typography, message } from 'antd'
+import OrderSummary from '../components/OrderSummary'
 import PhoneInput, { Country } from 'react-phone-number-input'
 import { FetchData } from '../../data/Apis/FetchData'
 import { LoadingOutlined } from "@ant-design/icons"
@@ -11,7 +12,6 @@ import "./styles/checkout.css"
 const CheckOut = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
-  const OrderSummary = React.lazy(() => import("../components/OrderSummary"));
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -149,7 +149,7 @@ const CheckOut = () => {
           <Col span={9}>
             <Typography.Title className="checkout-head-text">Order Summary</Typography.Title>
             <Col span={24}>
-                <Suspense fallback=""><OrderSummary userData={formValues} /></Suspense>
+                <OrderSummary userData={formValues} />
             </Col>
           </Col>
 

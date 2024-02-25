@@ -55,6 +55,16 @@ const PrivacyPolicy = () => {
             posted on this page with a revised effective date.
             </Typography.Text>
 
+            <Typography.Title className="pp-title-text">Terms & Conditions</Typography.Title>
+            <Typography.Text>
+            We may collect personal information from you such as your name, 
+            email address, postal address, phone number, and payment information 
+            when you interact with our Site or use our services. This information 
+            is collected when you voluntarily submit it to us or provide it 
+            through the use of our services. Please note that we do not have a 
+            return policy for products purchased from our food brand.
+            </Typography.Text>
+
             <Typography.Title className="pp-title-text">Contact Us</Typography.Title>
             <Typography.Text>
                 If you have any questions or concerns about our Privacy Policy, please contact us at 
