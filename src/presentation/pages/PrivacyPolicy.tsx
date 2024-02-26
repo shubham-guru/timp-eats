@@ -1,6 +1,12 @@
 import { Col, Row, Typography } from 'antd'
+import { useEffect } from 'react'
 
 const PrivacyPolicy = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
   return (
     <Row>
         <Col style={{marginBottom: "2%", padding: "2vmax"}} className="glassmorphism-effect">

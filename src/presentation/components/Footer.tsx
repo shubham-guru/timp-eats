@@ -1,12 +1,15 @@
-import { Col, Divider, Flex, Row, Typography, Image } from 'antd'
+import { Col, Divider, Flex, Row, Typography, Image, Button } from 'antd'
 import facebook from "../../assets/facebook.svg"
 import insta from "../../assets/instagram.svg"
 import linkedin from "../../assets/linkedin.svg"
+import routes from '../../routes/routes'
+import { useNavigate } from 'react-router-dom'
 
 import "./styles/footer.css"
-import routes from '../../routes/routes'
 
 const Footer = () => {
+
+    const navigate = useNavigate();
     return (
         <Row className="footer-row glassmorphism-effect">
             <Flex justify="space-between" align="center" gap={10}>
@@ -60,7 +63,7 @@ const Footer = () => {
 
             <Flex justify="space-between" style={{width: "100%"}}>
                 <Typography.Text>Copyright &#169; Timp Eats</Typography.Text>
-                <Typography.Link href={routes.PRIVACYPOLICY}>Privacy Policy</Typography.Link>
+                <Button type="link" onClick={() => navigate(routes.PRIVACYPOLICY)}>Privacy Policy</Button>
             </Flex>
         </Row>
     )
