@@ -42,7 +42,7 @@ const Navbar: React.FC<INavBar> = ({ isCart = true }) => {
       className="head-flex-container glassmorphism-effect"
       align="center"
       justify="space-between">
-      <Image preview={false} className="icon-img" src={logo} width={imageWidth} onClick={() => navigate(routes.HOME)} />
+      <Image preview={false} className="icon-img" src={logo} width={60} onClick={() => navigate(routes.HOME)} />
       <Flex gap={20}>
       {
           isCart ?

@@ -9,7 +9,7 @@ import ragiBhel from "../assets/product images/ragiBhel.jpg"
 export const productInfo = [
     {
         id: 1,
-        name: "Bajra Laddu.",
+        name: "Bajra Laddu",
         ingredients: "Pearl Millet Flour, Green Gram Dal, Sesame Seeds, Jaggery, Desi Ghee.",
         healthBenefits: ["Rich in fiber for digestive health.", 
         "High in essential minerals like iron and magnesium.", 
@@ -26,7 +26,7 @@ export const productInfo = [
     },
     {
         id: 2,
-        name: "Bajra Neem Crunchy Sticks.",
+        name: "Bajra Neem Crunchy Sticks",
         ingredients: "Pearl Millet Flour, Refined Flour, Fresh Curry Leaves, Extra Virgin Groundnut Oil, Condiment & Spices.",
         healthBenefits: ["Packed with essential nutrients like iron and magnesium.", 
         "Gluten-free alternative for those with sensitivities.", 
@@ -42,7 +42,7 @@ export const productInfo = [
     },
     {
         id: 3,
-        name: "Choco Chip Bajra Cookies.",
+        name: "Choco Chip Bajra Cookies",
         ingredients: "Pearl Millet Flour, Sugar Powder(Boora), Butter, Cocoa Powder, Rising Agent.",
         healthBenefits: ["Rich in fiber for digestive health.", 
         "Gluten-free alternative for those with sensitivities.", 
@@ -56,7 +56,7 @@ export const productInfo = [
     },
     {
         id: 4,
-        name: "Jowar Nan Khatai.",
+        name: "Jowar Nan Khatai",
         ingredients: "Jowar Flour, Besan, Desi Ghee, Boora (sugar powder).",
         healthBenefits: ["Rich in fiber for digestive health.", 
         "Gluten-free alternative for those with sensitivities.", 
@@ -70,7 +70,7 @@ export const productInfo = [
     },
     {
         id: 5,
-        name: "Bajra Chocolates.",
+        name: "Bajra Chocolates",
         ingredients: "Bajra Puffs, Chocolate.",
         healthBenefits: ["Bajra is rich in iron, which helps prevent iron deficiency anemia in children.", 
         "Bajra chocolate contains carbohydrates that provide a sustained release of energy, keeping children active and energized.", 
@@ -83,7 +83,7 @@ export const productInfo = [
     },
     {
         id: 6,
-        name: "Roasted Bajra Puffs - Peri-Peri.",
+        name: "Roasted Bajra Puffs - Peri-Peri",
         ingredients: "Pearl Millet (88%), Rock Salt, Red Chilli, Sunflower Oil,Garlic, Spirulina, Citric Acid, Species & Condiments.",
         healthBenefits: ["Roasted bajra puffs are a nutrient-dense snack, providing essential vitamins, minerals, and antioxidants necessary for overall health.", 
         "Being light and airy, roasted bajra puffs are low in calories, making them a guilt-free snack option for weight-conscious individuals.", 
@@ -96,7 +96,7 @@ export const productInfo = [
     },
     {
         id: 6,
-        name: "Ragi Bhel.",
+        name: "Ragi Bhel",
         ingredients: "Roasted Finger Millet, Curry Leafs, Green Chilli, Salt, Peanut, Namkeen, Species & Condiments.",
         healthBenefits: ["Ragi is a good source of calcium, which is essential for maintaining healthy bones and teeth.", 
         "Ragi has a low glycemic index, which means it causes a gradual rise in blood sugar levels compared to high-glycemic foods.", 

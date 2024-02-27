@@ -6,9 +6,11 @@ import "./styles/index.css";
 const Index = () => {
 
   return (
-    <Row>
-      <Col span={24} style={{ marginTop: 10 }}>
+    <Row gutter={[0, 20]}>
+      <Col span={24}>
         <Typography.Text className="heading-text glassmorphism-effect">Eat well, think well.</Typography.Text>
+      </Col>
+      <Col span={24}>
         <ProductContainer />
       </Col>
     </Row>

@@ -8,7 +8,7 @@ const ProductContainer = () => {
   const ProductCard = React.lazy(() => import("./ProductCard"))
 
   return (
-    <Col span={24} style={{ margin: 20 }}>
+    <Col span={24}>
       {
         productInfo.map((item: any, index: number) => {
           return (

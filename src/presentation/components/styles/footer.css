@@ -8,6 +8,8 @@
     color: #000000 !important;
     font-family: "Montserrat", sans-serif;
     font-size: 1.7vmax !important;
+    font-weight: 600;
+    letter-spacing: 0.4px;
 }
 .footer-subtitle{
     color: #333;
@@ -16,5 +18,5 @@
     cursor: pointer;
 }
 .footer-link-text{
-    color: #333 !important;
+    color: #272727 !important;
 }
