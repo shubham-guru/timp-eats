@@ -5,26 +5,6 @@
   padding: 3vmax;
 }
 
-.product-primary-text {
-  font-size: 2.3vmax;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  font-family: "Quattrocento Sans", sans-serif;
-  color: #1e1e1e;
-}
-
-.product-secondary-text {
-  font-size: 1.3vmax;
-  margin-top: 1vmax;
-  letter-spacing: 0.3px;
-  font-family: "Jost", sans-serif;
-}
-
-.product-tertiary-text{
-  font-size: 1vmax;
-  color: rgb(78, 78, 78);
-  letter-spacing: 0.3px;
-}
 .product-head-col {
   display: flex;
   justify-content: space-between;
@@ -57,7 +37,7 @@ height: 30px !important;
 }
 
 .ant-collapse>.ant-collapse-item >.ant-collapse-header{
-  background-color: #6e6e6e1f;
+  background-color: #4f4f4f3c;
 }
 
 .add-to-cart-btn{

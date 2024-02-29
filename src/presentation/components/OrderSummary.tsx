@@ -103,7 +103,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                     description: "Payment for order",
                     image: logo,
                     order_id: order.id,
-                    callback_url: "http://localhost:4000/api/paymentverification",
+                    callback_url: "https://nbz0awbsjf.execute-api.us-east-1.amazonaws.com/dev/getPaymentConfirmation",
                     prefill: {
                         name: userData.name,
                         email: userData.email,
@@ -132,6 +132,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
 
     return (
         <Col className="order-summary-main-col glassmorphism-effect">
+            <Typography.Text className="heading-md">Order Summary</Typography.Text>
             {contextHolder}
             <Table dataSource={dataSource} columns={columns} pagination={false} />
             <Flex className="order-summary-flex" justify="space-between">

@@ -13,14 +13,14 @@ const Footer = () => {
     return (
         <Row className="footer-row glassmorphism-effect" justify="space-evenly" gutter={[0, 20]}>
             <Col xs={24} lg={7} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
-                <Typography.Title className="footer-title">About us</Typography.Title>
+                <Typography.Title className="heading-md">About us</Typography.Title>
                 <Typography.Text className="footer-subtitle">Our goal isn't just about selling products and making money. We're focused on something bigger:
                     making sure everyone plays a role in improving society. We believe that when people eat well, they're better able
                     to think about the world around them and contribute positively. <br /> It's like our motto says: <br /> जब तक अच्छा आहार नहीं होगा, तब तक अच्छा विचार कैसे होगा ? <br />
                     If you can't eat well, how can you think well ?</Typography.Text>
             </Col>
             <Col xs={24} lg={7} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
-                <Typography.Title className="footer-title">Yes we are Expensive</Typography.Title>
+                <Typography.Title className="heading-md">Yes we are Expensive</Typography.Title>
                 <Typography.Text className="footer-subtitle">
                     If you also believe that we are EXPENSIVE, then this one is for you, my friend. Yes, we are expensive! But why? Because health
                     is valuable, being in shape requires investment, following a particular diet comes at a cost, and maintaining discipline is
@@ -32,7 +32,7 @@ const Footer = () => {
             </Col>
 
             <Col xs={24} lg={7} className="glassmorphism-effect" style={{ padding: "2vmax" }}>
-                <Typography.Title className="footer-title">Eat well = Think well</Typography.Title>
+                <Typography.Title className="heading-md">Eat well = Think well</Typography.Title>
                 <Typography.Text className="footer-subtitle">
                     This company believes in a simple idea: "Good food equals good thinking." We're convinced that when you eat well, you think well.
                     And when your mind is sharp, you can achieve great things. We're more than just a food brand; we're on a mission to empower
@@ -42,9 +42,11 @@ const Footer = () => {
 
             <Divider />
 
-            <Typography.Title className="footer-title">Let's Connect</Typography.Title>
+            <Col xs={12} lg={24}>
+                <Typography.Title className="heading-md">Let's Connect</Typography.Title>
+            </Col>
 
-            <Flex justify="space-between" style={{ width: "100%", marginTop: "2%" }} align="center">
+            <Flex justify="space-between" style={{ width: "100%" }} align="center">
                 <Flex gap={20}>
                     <Image preview={false} className="icon-img" src={facebook} alt="facebook_icon" width={50} />
                     <Image preview={false} className="icon-img" src={insta} alt="instagram_icon" width={50} />

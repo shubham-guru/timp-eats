@@ -56,11 +56,11 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
   const items: CollapseProps['items'] = [
     {
       key: '1',
-      label: <Typography.Text className="product-secondary-text">Health Benefits</Typography.Text>,
+      label: <Typography.Text className="text-md">Health Benefits</Typography.Text>,
       children: <List
         dataSource={productInfo.healthBenefits}
         renderItem={(item) => (
-          <List.Item className="product-tertiary-text">
+          <List.Item className="secondary text-sm">
             {item}
           </List.Item>
         )}
@@ -85,16 +85,23 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
       <Col xs={24} md={16} lg={18}>
         <Row gutter={[0, 20]}>
           <Col span={24}>
-            <Typography className="product-primary-text">{productInfo.name}</Typography>
+            <Row justify="space-between">
+              <Col>
+                <Typography className="heading-lg">{productInfo.name}</Typography>
+              </Col>
+              <Col>
+                <Typography className="text-md">&#8377; {productInfo.price} / 250gm</Typography>
+              </Col>
+            </Row>
           </Col>
 
           <Col span={24}>
-            <Typography.Text className="product-secondary-text">Ingredients : <Typography.Text className="product-tertiary-text">{productInfo.ingredients} & <HeartIcon /> </Typography.Text>
+            <Typography.Text className="text-md">Ingredients : <Typography.Text className="secondary text-sm">{productInfo.ingredients} & <HeartIcon /> </Typography.Text>
             </Typography.Text>
           </Col>
 
           <Col span={24}>
-            <Typography.Text className="product-secondary-text">Usage : <Typography.Text className="product-tertiary-text">{productInfo.usage}</Typography.Text>
+            <Typography.Text className="text-md">Usage : <Typography.Text className="secondary text-sm">{productInfo.usage}</Typography.Text>
             </Typography.Text>
           </Col>
 

@@ -1,24 +1,24 @@
 /* ScrollBar Style */
 ::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #444; 
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #111; 
-  }
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #111;
+}
 
 /* Remove Arrows/Spinners from Number Inputs */
 input::-webkit-outer-spin-button,
@@ -29,4 +29,90 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+
+.heading-lg {
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  font-family: "Quattrocento Sans", sans-serif;
+  color: #1e1e1e;
+}
+
+.heading-md {
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  font-family: "Quattrocento Sans", sans-serif;
+  color: #1e1e1e;
+}
+
+.text-md {
+  margin-top: 1vmax;
+  letter-spacing: 0.3px;
+  font-family: "Jost", sans-serif;
+}
+
+.text-sm {
+  margin-top: 1vmax;
+  letter-spacing: 0.3px;
+  font-family: "Jost", sans-serif;
+}
+
+.secondary {
+  color: rgb(36, 36, 36);
+}
+
+
+@media only screen and (min-width: 200px) {
+  .heading-lg {
+    font-size: 3.3vmax;
+  }
+
+  .heading-md{
+    font-size: 3vmax !important;
+  }
+
+  .text-md {
+    font-size: 1.9vmax;
+  }
+
+  .text-sm {
+    font-size: 1.7vmax;
+  }
+}
+
+@media only screen and (min-width: 550px) {
+  .heading-lg {
+    font-size: 2.7vmax;
+  }
+
+  .heading-md{
+    font-size: 2.2vmax !important
+  }
+
+  .text-md {
+    font-size: 1.6vmax;
+  }
+
+  .text-sm {
+    font-size: 1.4vmax;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .heading-lg {
+    font-size: 2.3vmax;
+  }
+
+  .heading-md{
+    font-size: 1.9vmax !important;
+  }
+
+  .text-md {
+    font-size: 1.3vmax;
+  }
+
+  .text-sm {
+    font-size: 1.1vmax;
+  }
 }

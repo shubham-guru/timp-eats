@@ -47,83 +47,152 @@ const Cart = () => {
 
 
     return (
-        <Row className="cart-page-row" gutter={[0, 30]}>
+        <Row gutter={[0, 20]}>
             {contextHolder}
+            <Col span={24} className='cart-page-header glassmorphism-effect'>
+                <Row justify="space-between">
+                    <Col>
+                        <Typography.Text className="heading-md">Cart</Typography.Text>
+                    </Col>
+                    <Col>
+                        <Typography.Text className="heading-md" style={{ textAlign: "right" }}>Total: {totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'INR' })}</Typography.Text>
+                    </Col>
+                </Row>
+            </Col>
+
             {
-                productObj.length ?
+                productObj.length ? (
                     <Col span={24}>
-                        <Row>
-                            <Col span={12}>
-                                <Typography.Title className="cart-heading-text">Cart</Typography.Title>
-                            </Col>
-                            <Col span={12}>
-                                <Typography.Title className="cart-heading-text" style={{ textAlign: "right" }}>Total: {totalPrice.toLocaleString('en-US', {
-                                    style: 'currency',
-                                    currency: 'INR'
-                                })}</Typography.Title>
-                            </Col>
-                        </Row>
-
-                        <Col span={24} className="cart-product-details-col">
-                            <Flex align="center" justify="space-between">
-                                <Typography.Title className="cart-heading-subtitle">Product Details</Typography.Title>
-                                <Button className="primary-us-btn"
-                                    onClick={() => navigate(routes.CHECKOUT)}
-                                    type="primary">Checkout <ArrowRightOutlined /></Button>
-                            </Flex>
-                            {
-                                productObj?.map((item: { productInfo: productInfoInterface, id: number }, index: number) => {
-                                    return (
-                                        <Col key={index} span={24} className="product-details-col">
-                                            <Flex align="center" justify="space-between">
-                                                <Image src={item?.productInfo?.img} alt={`${item?.productInfo.name}-pic`} width={150} className="product-img" />
-                                                <Typography.Text className="cart-product-text">{item?.productInfo.name}</Typography.Text>
-                                                <Flex align="center">
-                                                    {/* <PlusOutlined className="action-btns" onClick={() => handleUnitChange("add", units ? units : item.productInfo.units)} /> */}
-                                                    <Typography.Text className="cart-product-text">{item.productInfo.units} {item.productInfo.units > 1 ? "Units" : "Unit"}</Typography.Text>
-                                                    {/* <MinusOutlined className="action-btns" onClick={() => handleUnitChange("minus", units ? units : item.productInfo.units)} /> */}
-                                                </Flex>
-
-                                                <Flex align="center">
-                                                    {/* <PlusOutlined className="action-btns" /> */}
-                                                    <Typography.Text className="cart-product-text">{item.productInfo.quantity} {item.productInfo.qtyLabel.includes("kg") ? "kg" : "g"}</Typography.Text>
-                                                    {/* <MinusOutlined className="action-btns" /> */}
-                                                </Flex>
-
-                                                <Typography.Text className="cart-product-text">&#8377; {item?.productInfo.totalPrice}</Typography.Text>
-                                                <DeleteOutlined id="delete-icon" onClick={() => handleDelete(item.id)} />
+                        {
+                            productObj?.map((item: { productInfo: productInfoInterface, id: number }, index: number) => {
+                                return (
+                                    <Col key={index} span={24} className="product-details-col glassmorphism-effect">
+                                        <Flex align="center" justify="space-between">
+                                            <Image src={item?.productInfo?.img} alt={`${item?.productInfo.name}-pic`} width={150} className="product-img" />
+                                            <Typography.Text className="cart-product-text">{item?.productInfo.name}</Typography.Text>
+                                            <Flex align="center">
+                                                {/* <PlusOutlined className="action-btns" onClick={() => handleUnitChange("add", units ? units : item.productInfo.units)} /> */}
+                                                <Typography.Text className="cart-product-text">{item.productInfo.units} {item.productInfo.units > 1 ? "Units" : "Unit"}</Typography.Text>
+                                                {/* <MinusOutlined className="action-btns" onClick={() => handleUnitChange("minus", units ? units : item.productInfo.units)} /> */}
                                             </Flex>
 
-                                            {/* Confirm Delete Modal */}
-                                            <Modal footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                                <Typography className="modal-heading">Are you sure ? </Typography>
-                                                <Divider />
-                                                <Typography.Text className="delete-modal-text">But this tastes very good. You should definitely try this :) </Typography.Text>
-                                                <Flex gap={10} style={{ marginTop: "2vmax" }}>
-                                                    <Button style={{ width: "100%" }} type="default" onClick={() => handleConfirm("remove")}>remove it !</Button>
-                                                    <Button className="primary-us-btn" style={{ width: "100%" }} onClick={() => handleConfirm("keep")} type="primary">KEEP IT !</Button>
-                                                </Flex>
-                                            </Modal>
+                                            <Flex align="center">
+                                                {/* <PlusOutlined className="action-btns" /> */}
+                                                <Typography.Text className="cart-product-text">{item.productInfo.quantity} {item.productInfo.qtyLabel.includes("kg") ? "kg" : "g"}</Typography.Text>
+                                                {/* <MinusOutlined className="action-btns" /> */}
+                                            </Flex>
 
-                                        </Col>
-                                    )
-                                })
-                            }
-                        </Col>
-                        <Col span={24}>
-                            <Button className="primary-us-btn cart-btn"
-                                onClick={() => navigate(routes.CHECKOUT)}
-                                type="primary">Checkout <ArrowRightOutlined /></Button>
-                        </Col>
-                    </Col> :
+                                            <Typography.Text className="cart-product-text">&#8377; {item?.productInfo.totalPrice}</Typography.Text>
+                                            <DeleteOutlined id="delete-icon" onClick={() => handleDelete(item.id)} />
+                                        </Flex>
+
+                                        {/* Confirm Delete Modal */}
+                                        <Modal centered footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                            <Typography className="modal-heading">Are you sure ? </Typography>
+                                            <Divider />
+                                            <Typography.Text className="delete-modal-text">But this tastes very good. You should definitely try this :) </Typography.Text>
+                                            <Flex gap={10} style={{ marginTop: "2vmax" }}>
+                                                <Button style={{ width: "100%" }} type="default" onClick={() => handleConfirm("remove")}>remove it !</Button>
+                                                <Button className="primary-us-btn" style={{ width: "100%" }} onClick={() => handleConfirm("keep")} type="primary">KEEP IT !</Button>
+                                            </Flex>
+                                        </Modal>
+
+                                    </Col>
+                                )
+                            })
+                        }
+                        <Button className="primary-us-btn cart-btn"
+                            onClick={() => navigate(routes.CHECKOUT)}
+                            type="primary">Checkout <ArrowRightOutlined /></Button>
+                    </Col>
+                ) : (
                     // Show Empty Cart Image
                     <Flex align='center' justify='center' vertical style={{ width: "100%" }}>
                         <Image preview={false} src={emptyCart} alt="empty-cart" width={400} />
                         <Typography.Text style={{ color: "#fff" }}>No Products in the cart !</Typography.Text>
                         <Button className="primary-us-btn" style={{ width: "30%", marginTop: "1vmax" }} onClick={() => navigate(routes.HOME)} type="primary">Go to Shop</Button>
                     </Flex>
+                )
             }
         </Row>
+        // <Row className="cart-page-row" gutter={[0, 30]}>
+        //     {contextHolder}
+        //     {
+        //         productObj.length ?
+        //             <Col span={24}>
+        //                 <Row>
+        //                     <Col span={12}>
+        //                         <Typography.Title className="cart-heading-text">Cart</Typography.Title>
+        //                     </Col>
+        //                     <Col span={12}>
+        //                         <Typography.Title className="cart-heading-text" style={{ textAlign: "right" }}>Total: {totalPrice.toLocaleString('en-US', {
+        //                             style: 'currency',
+        //                             currency: 'INR'
+        //                         })}</Typography.Title>
+        //                     </Col>
+        //                 </Row>
+
+
+        //                 <Col span={24} className="cart-product-details-col">
+        //                     <Flex align="center" justify="space-between">
+        //                         <Typography.Title className="cart-heading-subtitle">Product Details</Typography.Title>
+        //                         <Button className="primary-us-btn"
+        //                             onClick={() => navigate(routes.CHECKOUT)}
+        //                             type="primary">Checkout <ArrowRightOutlined /></Button>
+        //                     </Flex>
+        //                     {
+        //                         productObj?.map((item: { productInfo: productInfoInterface, id: number }, index: number) => {
+        //                             return (
+        //                                 <Col key={index} span={24} className="product-details-col glassmorphism-effect">
+        //                                     <Flex align="center" justify="space-between">
+        //                                         <Image src={item?.productInfo?.img} alt={`${item?.productInfo.name}-pic`} width={150} className="product-img" />
+        //                                         <Typography.Text className="cart-product-text">{item?.productInfo.name}</Typography.Text>
+        //                                         <Flex align="center">
+        //                                             {/* <PlusOutlined className="action-btns" onClick={() => handleUnitChange("add", units ? units : item.productInfo.units)} /> */}
+        //                                             <Typography.Text className="cart-product-text">{item.productInfo.units} {item.productInfo.units > 1 ? "Units" : "Unit"}</Typography.Text>
+        //                                             {/* <MinusOutlined className="action-btns" onClick={() => handleUnitChange("minus", units ? units : item.productInfo.units)} /> */}
+        //                                         </Flex>
+
+        //                                         <Flex align="center">
+        //                                             {/* <PlusOutlined className="action-btns" /> */}
+        //                                             <Typography.Text className="cart-product-text">{item.productInfo.quantity} {item.productInfo.qtyLabel.includes("kg") ? "kg" : "g"}</Typography.Text>
+        //                                             {/* <MinusOutlined className="action-btns" /> */}
+        //                                         </Flex>
+
+        //                                         <Typography.Text className="cart-product-text">&#8377; {item?.productInfo.totalPrice}</Typography.Text>
+        //                                         <DeleteOutlined id="delete-icon" onClick={() => handleDelete(item.id)} />
+        //                                     </Flex>
+
+        //                                     {/* Confirm Delete Modal */}
+        //                                     <Modal footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        //                                         <Typography className="modal-heading">Are you sure ? </Typography>
+        //                                         <Divider />
+        //                                         <Typography.Text className="delete-modal-text">But this tastes very good. You should definitely try this :) </Typography.Text>
+        //                                         <Flex gap={10} style={{ marginTop: "2vmax" }}>
+        //                                             <Button style={{ width: "100%" }} type="default" onClick={() => handleConfirm("remove")}>remove it !</Button>
+        //                                             <Button className="primary-us-btn" style={{ width: "100%" }} onClick={() => handleConfirm("keep")} type="primary">KEEP IT !</Button>
+        //                                         </Flex>
+        //                                     </Modal>
+
+        //                                 </Col>
+        //                             )
+        //                         })
+        //                     }
+        //                 </Col>
+        //                 <Col span={24}>
+        //                     <Button className="primary-us-btn cart-btn"
+        //                         onClick={() => navigate(routes.CHECKOUT)}
+        //                         type="primary">Checkout <ArrowRightOutlined /></Button>
+        //                 </Col>
+        //             </Col> :
+        //             // Show Empty Cart Image
+        //             <Flex align='center' justify='center' vertical style={{ width: "100%" }}>
+        //                 <Image preview={false} src={emptyCart} alt="empty-cart" width={400} />
+        //                 <Typography.Text style={{ color: "#fff" }}>No Products in the cart !</Typography.Text>
+        //                 <Button className="primary-us-btn" style={{ width: "30%", marginTop: "1vmax" }} onClick={() => navigate(routes.HOME)} type="primary">Go to Shop</Button>
+        //             </Flex>
+        //     }
+        // </Row>
     )
 }
 

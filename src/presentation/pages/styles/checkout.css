@@ -21,10 +21,8 @@
 
 /* Order Summary */
 .order-summary-main-col{
-    margin-bottom: 2%;
-    padding: 2vmax;
+    padding: 25px;
     width: 100%;
-    height: 30vmax;
     overflow-y: scroll;
 }
 .order-summary-table-heading{
