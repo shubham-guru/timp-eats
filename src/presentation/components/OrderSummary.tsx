@@ -18,10 +18,9 @@ const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY
 
 const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
     const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
-    console.log("🚀 ~ productObj:", productObj)
     const [messageApi, contextHolder] = message.useMessage();
     const [selectedPayment, setSelectedPayment] = useState<string>(PaymentTypes.PAYNOW);
-    
+
     const productsData = productObj.map((item: { productInfo: productInfoInterface }, index: number) => {
         return {
             key: index,
@@ -31,9 +30,9 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
             units: item.productInfo.units
         }
     })
-    
+
     const totalPrice = calculateTotalPrice(productObj);
-    
+
     // Calculating Total Qty of Products in KGs
     const totalQty: any[] = productObj?.map((item: { productInfo: productInfoInterface }) => {
         if (item.productInfo.qtyLabel.includes("kg")) {
@@ -47,11 +46,11 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
             return total * item.productInfo.units
         }
     })
-    
+
     // Total Sum of products qty
     const quantitySum = totalQty?.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-    
-    
+
+
     const columns = [
         {
             title: <Typography.Text className="order-summary-table-heading">Name</Typography.Text>,
@@ -74,7 +73,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
             key: 'price',
         },
     ];
-    
+
     const calculatePriceWithDelivery = () => {
         const checkoutAmt = (quantitySum > 1 ? totalPrice : totalPrice + 45).toLocaleString('en-US', {
             style: 'currency',
@@ -82,15 +81,25 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
         })
         return checkoutAmt
     }
-    console.log("🚀 ~ setSelectedPayment:", setSelectedPayment)
-    console.log("🚀 ~ selectedPayment:", selectedPayment)
 
     const handleCheckout = async () => {
-        const isData = Object.values(userData)
-        console.log("🚀 ~ handleCheckout ~ userData:", userData)
-        const allValuesFilled = isData.every(value => value.trim() !== '');
+        const completeAddress = userData.complete_address || {};
+        const allValuesFilled = Object.values(userData).every(value => {
+            if (typeof value === 'string') {
+                return value.trim() !== '';
+            }
+            return true;
+        });
 
-        if (allValuesFilled) {
+        const allAddressValuesFilled = Object.values(completeAddress).every((value: any) => {
+            if (typeof value === 'string') {
+                return value.trim() !== '';
+            }
+            return true;
+        });
+
+
+        if (allValuesFilled && allAddressValuesFilled) {
 
             if (selectedPayment === PaymentTypes.PAYNOW) {
 
@@ -98,15 +107,15 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                 const numberString = str.replace(/[^\d.]/g, '');
                 const totalAmt = parseFloat(numberString);
 
-                const { data: { order } } = await axios.post(baseUrl+"/order", {
-                    user:userData,
-                    order:{
-                        payment_mode:selectedPayment,
-                        order_detail:productObj,
-                        total_price:totalAmt,
-                        tax:0,
-                        delievery_charge:quantitySum >= 3 ? "FREE" : "₹49",
-                        status:"cart"
+                const { data: { order } } = await axios.post(baseUrl + "/order", {
+                    user: userData,
+                    order: {
+                        payment_mode: selectedPayment,
+                        order_detail: productObj,
+                        total_price: totalAmt,
+                        tax: 0,
+                        delievery_charge: quantitySum >= 3 ? "FREE" : "₹49",
+                        status: "cart"
                     },
                     amount: totalAmt
                 })
@@ -119,11 +128,11 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                     description: "Payment for order",
                     image: logo,
                     order_id: order.id,
-                    callback_url: baseUrl+"/getPaymentConfirmation",
+                    callback_url: baseUrl + "/getPaymentConfirmation",
                     prefill: {
-                        name: userData.name,
+                        name: userData.full_name,
                         email: userData.email,
-                        contact: userData.phone
+                        contact: userData.phone_number
                     },
                     notes: {
                         "address": "Razorpay Corporate Office"
@@ -133,7 +142,6 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                     }
                 };
                 const razor = (window as any).Razorpay(options)
-                console.log("🚀 ~ handleCheckout ~ razor:", razor)
                 razor.open();
             } else {
                 messageApi.success("Order Placed")

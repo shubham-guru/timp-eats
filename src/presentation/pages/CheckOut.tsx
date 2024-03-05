@@ -5,50 +5,78 @@ import PhoneInput, { Country } from 'react-phone-number-input'
 import { FetchData } from '../../data/Apis/FetchData'
 import { LoadingOutlined } from "@ant-design/icons"
 import { pincodeUrl } from '../../domain/constants/Urls'
-import { pinCodeData } from '../../domain/interfaces/pinCodeDataInterface'
+import { IUserAddress } from '../../domain/interfaces/formUserDataInterface'
 import 'react-phone-number-input/style.css'
 import "./styles/checkout.css"
 
 const CheckOut = () => {
+
+  const initialAddress: IUserAddress = {
+    street: "",
+    city: "",
+    landmark: "",
+    state: "",
+    country: "",
+    pincode: ""
+  };
+
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const [formValues, setFormValues] = useState({
-    name: "",
+    full_name: "",
     email: "",
-    address: "",
-    pincode: "",
-    landmark: "",
-    phone: ""
+    complete_address: [initialAddress],
+    phone_number: ""
   })
-  const [pinCodeResult, setPinCodeResult] = useState<Array<pinCodeData>>([]);
   const [countryCode, setCountryCode] = useState("IN");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handlePinCode = async (e: { target: { name: string, value: string } }) => {
     if (e.target.name === "pincode") {
-      setFormValues(prevFormValues => ({
-        ...prevFormValues,
-        pincode: e.target.value
-      }));
 
-      const updatedPincode = e.target.value;
-
-      const params = {
-        postalcode: updatedPincode,
-        countrycode: countryCode
+      const { value } = e.target;
+      const updatedAddress = [...formValues.complete_address];
+      if (updatedAddress.length > 0) {
+        updatedAddress[0].pincode = value;
+        setFormValues({ ...formValues, complete_address: updatedAddress });
       }
-      if (updatedPincode.length >= 5) {
+      
+      const params = {
+        postalcode: value,
+        countrycode: countryCode
+      };
+
+      if (value.length >= 5) {
         setLoading(true);
         FetchData(pincodeUrl, params, (result) => {
-          setPinCodeResult(result?.data.result);
           setLoading(false);
           if (result?.data.status === false) {
-            messageApi.error("No City, State & Country found")
+            messageApi.error("No City, State & Country found");
+            return;
           }
+
+          const pinCodeData = result?.data?.result;
+          
+          const city = pinCodeData[0]?.district;
+          const state = pinCodeData[0]?.state;
+          const country = pinCodeData[0]?.country;
+          const pincode = value
+
+          setFormValues(prevFormValues => ({
+            ...prevFormValues,
+            complete_address: [{
+              ...prevFormValues.complete_address[0],
+              city,
+              state,
+              country,
+              pincode
+            }]
+          }));
         });
       }
     }
-  }
+  };
+
 
   const handleSubmit = () => {
     console.log(formValues)
@@ -71,7 +99,7 @@ const CheckOut = () => {
               required style={{ width: "40%" }}
               rules={[{ required: true, message: 'Please input your FullName!' }]}
             >
-              <Input placeholder="Full Name" onChange={(e) => setFormValues({ ...formValues, name: e.target.value })} />
+              <Input placeholder="Full Name" onChange={(e) => setFormValues({ ...formValues, full_name: e.target.value })} />
             </Form.Item>
 
             {/* Phone Number */}
@@ -82,8 +110,8 @@ const CheckOut = () => {
               <PhoneInput
                 addInternationalOption={false}
                 defaultCountry="IN"
-                value={formValues.phone}
-                onChange={(value: string) => setFormValues({ ...formValues, phone: value })}
+                value={formValues.phone_number}
+                onChange={(value: string) => setFormValues({ ...formValues, phone_number: value })}
                 onCountryChange={(countryData: Country) => setCountryCode(countryData)}
               />
             </Form.Item>
@@ -100,7 +128,14 @@ const CheckOut = () => {
           <Form.Item label="Complete Address" required
             rules={[{ required: true, message: 'Please input your Address!' }]}
           >
-            <Input placeholder="House/Floor No. Building Name or Street, Locality" onChange={(e) => setFormValues({ ...formValues, address: e.target.value })} />
+            <Input placeholder="House/Floor No. Building Name or Street, Locality" onChange={(e) => {
+              const { value } = e.target;
+              const updatedAddress = [...formValues.complete_address];
+              if (updatedAddress.length > 0) {
+                updatedAddress[0].street = value;
+                setFormValues({ ...formValues, complete_address: updatedAddress });
+              }
+            }} />
           </Form.Item>
 
           {/* LandMark */}
@@ -108,8 +143,14 @@ const CheckOut = () => {
             rules={[{ required: true, message: 'Please input your Landmark!' }]}
           >
             <Input placeholder="Any nearby post office, market, Hospital as the landmark"
-              onChange={(e) => setFormValues({ ...formValues, landmark: e.target.value })}
-            />
+              onChange={(e) => {
+                const { value } = e.target;
+                const updatedAddress = [...formValues.complete_address];
+                if (updatedAddress.length > 0) {
+                  updatedAddress[0].landmark = value;
+                  setFormValues({ ...formValues, complete_address: updatedAddress });
+                }
+              }} />
           </Form.Item>
 
           <Flex justify='space-between'>
@@ -118,25 +159,25 @@ const CheckOut = () => {
               rules={[{ required: true, message: 'Please input your Pincode!' }]}
             >
               <Flex align='center' gap={5}>
-                <Input type="number" placeholder="Pin Code" value={formValues.pincode} name="pincode" onChange={handlePinCode} />
+                <Input placeholder="Pin Code" value={formValues.complete_address[0]?.pincode} name="pincode" onChange={handlePinCode} />
                 {loading && <LoadingOutlined />}
               </Flex>
             </Form.Item>
 
             {/* City */}
             <Form.Item label="City" required>
-              <Input placeholder="City" readOnly value={pinCodeResult[0]?.district} />
+              <Input placeholder="City" readOnly value={formValues.complete_address[0]?.city} />
             </Form.Item>
 
             {/* State */}
             <Form.Item label="State" required>
-              <Input readOnly placeholder="State" value={pinCodeResult[0]?.state} />
+              <Input readOnly placeholder="State" value={formValues.complete_address[0]?.state} />
             </Form.Item>
           </Flex>
 
           {/* Country */}
           <Form.Item label="Country" required>
-            <Input readOnly placeholder="Country" value={pinCodeResult[0]?.country} />
+            <Input readOnly placeholder="Country" value={formValues.complete_address[0]?.country} />
           </Form.Item>
         </Form>
       </Col>
