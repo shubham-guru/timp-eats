@@ -16,6 +16,7 @@ const Navbar: React.FC<INavBar> = ({ isCart = true }) => {
   const innerWidth = window.innerWidth;
 
   const [imageWidth, setImageWidth] = useState<number>(120); // Initial width of the image
+  console.log("🚀 ~ imageWidth:", imageWidth)
   const aspectRatio = 120 / innerWidth; 
 
   useEffect(() => {
