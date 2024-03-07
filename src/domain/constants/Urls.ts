@@ -1,1 +1,1 @@
-export const pincodeUrl = "https://api.worldpostallocations.com/pincode";
+export const pincodeUrl = "https://api.zipcodestack.com/v1/search";

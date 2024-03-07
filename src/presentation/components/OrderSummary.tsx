@@ -1,25 +1,32 @@
 import { useState } from 'react'
 import { Col, Table, Typography, Flex, Divider, Button, message } from 'antd'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import logo from "../../assets/logo.png"
 import { RootState } from '../../redux/store/store'
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface'
 import { calculateTotalPrice } from '../../data/helpers/totalPrice'
 import { formUserDataInterface } from '../../domain/interfaces/formUserDataInterface'
 import { PaymentTypes } from '../../domain/constants/paymentsTypes'
+import routes from '../../routes/routes'
+import { useNavigate } from 'react-router-dom'
+import { removeAllProducts } from '../../redux/slice/cartSlice'
 
 type IOrderSummaryType = {
     userData: formUserDataInterface
+    isLoading: (value: boolean) => void;
 }
 
 const baseUrl = import.meta.env.VITE_BSE_URL
 const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY
 
-const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
+const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
     const [messageApi, contextHolder] = message.useMessage();
     const [selectedPayment, setSelectedPayment] = useState<string>(PaymentTypes.PAYNOW);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const productsData = productObj.map((item: { productInfo: productInfoInterface }, index: number) => {
         return {
@@ -100,26 +107,37 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
 
 
         if (allValuesFilled && allAddressValuesFilled) {
+            
+            const str = calculatePriceWithDelivery();
+            const numberString = str.replace(/[^\d.]/g, '');
+            const totalAmt = parseFloat(numberString);
+            isLoading(true)
+            const { data: { order } }: any = await axios.post(baseUrl + "/order", {
+                user: userData,
+                order: {
+                    payment_mode: selectedPayment,
+                    order_detail: productObj,
+                    total_price: totalAmt,
+                    tax: 0,
+                    delievery_charge: quantitySum >= 3 ? "FREE" : "₹49",
+                    status: "cart"
+                },
+                amount: totalAmt
+            }).then((res) => {
+                if(res?.data) isLoading(false)
+                if(selectedPayment === PaymentTypes.COD) {
+                    messageApi.success("Order Placed Successfully")
+                    setTimeout(() => {
+                        dispatch(removeAllProducts())
+                        navigate(routes.HOME)
+                    }, 3000)
+                }
+            }).catch((err) => {
+                messageApi.error("Something went wrong")
+                console.log("🚀 ~ handleCheckout ~ err:", err)
+            }) 
 
-            if (selectedPayment === PaymentTypes.PAYNOW) {
-
-                const str = calculatePriceWithDelivery();
-                const numberString = str.replace(/[^\d.]/g, '');
-                const totalAmt = parseFloat(numberString);
-
-                const { data: { order } } = await axios.post(baseUrl + "/order", {
-                    user: userData,
-                    order: {
-                        payment_mode: selectedPayment,
-                        order_detail: productObj,
-                        total_price: totalAmt,
-                        tax: 0,
-                        delievery_charge: quantitySum >= 3 ? "FREE" : "₹49",
-                        status: "cart"
-                    },
-                    amount: totalAmt
-                })
-
+            if(selectedPayment === PaymentTypes.PAYNOW) {
                 const options = {
                     razorpay_key,
                     amount: order.amount,
@@ -133,7 +151,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                         name: userData.full_name,
                         email: userData.email,
                         contact: userData.phone_number
-                    },
+            },
                     notes: {
                         "address": "Razorpay Corporate Office"
                     },
@@ -143,10 +161,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                 };
                 const razor = (window as any).Razorpay(options)
                 razor.open();
-            } else {
-                messageApi.success("Order Placed")
             }
-
         } else {
             messageApi.error("Kindly fill all the details in the form")
         }
@@ -182,7 +197,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                     </Col>
                 </Flex>
 
-                <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.PAYNOW ? 'selected-payment' : ''}`}
+                {/* <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.PAYNOW ? 'selected-payment' : ''}`}
                     style={{ padding: "3%" }} align="center"
                     onClick={() => setSelectedPayment(PaymentTypes.PAYNOW)}>
                     <Col span={20}>
@@ -194,7 +209,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData }) => {
                             {calculatePriceWithDelivery()}
                         </Typography.Text> : null}
                     </Col>
-                </Flex>
+                </Flex> */}
             </Flex> <br />
             <Button type="primary" className="primary-us-btn cart-btn" onClick={handleCheckout}>Pay & Checkout</Button>
 

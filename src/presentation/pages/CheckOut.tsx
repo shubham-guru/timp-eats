@@ -11,6 +11,8 @@ import "./styles/checkout.css"
 
 const CheckOut = () => {
 
+  const apiKey = import.meta.env.VITE_PINCODE_API_KEY;
+
   const initialAddress: IUserAddress = {
     street: "",
     city: "",
@@ -30,6 +32,7 @@ const CheckOut = () => {
   })
   const [countryCode, setCountryCode] = useState("IN");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loader, setLoader] = useState<boolean>(false);
 
   const handlePinCode = async (e: { target: { name: string, value: string } }) => {
     if (e.target.name === "pincode") {
@@ -42,24 +45,34 @@ const CheckOut = () => {
       }
       
       const params = {
-        postalcode: value,
-        countrycode: countryCode
+        codes: value,
+        country: countryCode,
+        apikey: apiKey
       };
 
       if (value.length >= 5) {
         setLoading(true);
         FetchData(pincodeUrl, params, (result) => {
           setLoading(false);
-          if (result?.data.status === false) {
+          if (Object.values(result?.results).length === 0) {
             messageApi.error("No City, State & Country found");
+            setFormValues(prevFormValues => ({
+              ...prevFormValues,
+              complete_address: [{
+                ...prevFormValues.complete_address[0],
+                city: "",
+                state: "",
+                country: "",
+              }]
+            }));
             return;
           }
 
-          const pinCodeData = result?.data?.result;
+          const pinCodeData: any = Object.values(result?.results)[0];
           
-          const city = pinCodeData[0]?.district;
+          const city = pinCodeData[0]?.city;
           const state = pinCodeData[0]?.state;
-          const country = pinCodeData[0]?.country;
+          const country = pinCodeData[0]?.country_code;
           const pincode = value
 
           setFormValues(prevFormValues => ({
@@ -84,6 +97,7 @@ const CheckOut = () => {
 
   return (
     <Row gutter={[0, 20]} justify="space-between" style={{ marginBottom: "2%" }}>
+     { loader ?  <span className="loader"></span> : null}
       {contextHolder}
       <Col span={24} style={{ display: "flex", justifyContent: "center" }}>
         <Typography.Text className="checkout-note">Don't think too much, you are ordering health</Typography.Text>
@@ -184,7 +198,7 @@ const CheckOut = () => {
 
       {/* Order Summary Card */}
       <Col xs={24} lg={10}>
-        <OrderSummary userData={formValues} />
+        <OrderSummary userData={formValues} isLoading={(value: boolean) => setLoader(value)} />
       </Col>
     </Row>
   )

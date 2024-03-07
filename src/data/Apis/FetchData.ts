@@ -5,7 +5,7 @@ import _ from 'lodash';
 const debouncedFetchData = _.debounce(async (url: string, queryParams: {}, callback: (data: any) => void) => {
     try {
         const pinCodeData = await axios.get(url, { params: queryParams });
-        callback(pinCodeData); // Call the callback function with the data
+        callback(pinCodeData?.data); // Call the callback function with the data
     } catch (error) {
         console.error("Error fetching data:", error);
     }
