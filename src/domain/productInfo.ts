@@ -3,8 +3,11 @@ import crunchyStick from "../assets/product images/crunchyStick.jpg";
 import chocoChip from "../assets/product images/chocoChipImg.jpg";
 import nanKhatai from "../assets/product images/jowarNanKhatai.jpg"
 import bajraChocolate from "../assets/product images/bajraChocolate.jpg"
-import bajraPuffs from "../assets/product images/bajraPuff.jpg"
 import ragiBhel from "../assets/product images/ragiBhel.jpg"
+import bajraPuffs from "../assets/product images/bajraPuffs.jpg"
+import multiMilletBhel from "../assets/product images/multiMilletBhel.jpg"
+import kharkhra from "../assets/product images/khakhra.jpg"
+import beetRootkharkhra from "../assets/product images/beetrootKhakhra.jpg"
 
 export const productInfo = [
     {
@@ -20,7 +23,7 @@ export const productInfo = [
         "Healthy saturated fats for energy and brain function.",
         "Supports a healthy immune system and skin"],
         usage: ["Grab a bite before heading to work or college! Convenient and easy to eat, perfect for avoiding the morning rush."],
-        price: 209,
+        price: 279,
         isHandMade: true,
         img: bajraImg
     },
@@ -36,7 +39,7 @@ export const productInfo = [
         "High in heart-healthy monounsaturated fats.", 
         "Contains vitamin E, an antioxidant"],
         usage: ["Enjoy these with your morning tea or as a satisfying evening snack to curb those cravings."],
-        price: 189,
+        price: 249,
         isHandMade: false,
         img: crunchyStick
     },
@@ -50,7 +53,7 @@ export const productInfo = [
         "Rich in antioxidants for overall health.",
         "High in fiber, aiding in digestion and weight management"],
         usage: ["Incorporate them into your child's nutrition for added health benefits, fostering a connection with your little ones."],
-        price: 219,
+        price: 249,
         isHandMade: false,
         img: chocoChip
     },
@@ -64,7 +67,7 @@ export const productInfo = [
         "Jowar contains antioxidants like tannins and phenolic acids, which help neutralize harmful free radicals in the body.",
         "The complex carbohydrates in jowar are digested slowly, leading to gradual increases in blood sugar levels"],
         usage: ["Share the sweetness of this products with your loved ones to strengthen your bond and create delightful memories together."],
-        price: 219,
+        price: 259,
         isHandMade: false,
         img: nanKhatai
     },
@@ -77,7 +80,7 @@ export const productInfo = [
         "Bajra is naturally gluten-free, making Bajra chocolate suitable for children with gluten sensitivities.",
         "The nutrients in Bajra chocolate, such as magnesium and vitamins, support brain health and cognitive function, enhancing children's focus, concentration, and memory..",],
         usage: ["Delight your kids and your loved one with these special chocolates to make them feel cherished and loved"],
-        price: 229,
+        price: 299,
         isHandMade: false,
         img: bajraChocolate
     },
@@ -90,7 +93,7 @@ export const productInfo = [
         "The light and crispy texture of roasted bajra puffs provides a satisfying crunch, making them enjoyable to eat.",
         "Bajra puffs are a kid-friendly snack option that can help introduce children to healthier snack alternatives while satisfying their taste buds..",],
         usage: ["Enjoy a guilt-free, gut-friendly snack that perfectly fills the gap between meals, suitable for any time of day."],
-        price: 199,
+        price: 219,
         isHandMade: false,
         img: bajraPuffs
     },
@@ -103,8 +106,51 @@ export const productInfo = [
         "Ragi is an excellent source of iron, which is necessary for the production of hemoglobin and red blood cells.",
         "Ragi contains essential nutrients such as vitamins, minerals, and antioxidants, including vitamin C, vitamin E, and magnesium.",],
         usage: ["Enjoy a guilt-free, gut-friendly snack that perfectly fills the gap between meals, suitable for any time of day."],
-        price: 249,
+        price: 279,
         isHandMade: false,
         img: ragiBhel
+    },
+    {
+        id: 7,
+        name: "Multi Millet Bhel",
+        ingredients: "Bajra Puff, Jowar Puff, Ragi Flakes, Corn Flakes, Peanut, Moth Dal Sev, Curry Leaves and Species & Condiments.",
+        healthBenefits: ["High in magnesium, supports heart health.", 
+        "Provides sustained energy due to its complex carbohydrates.", 
+        "High in protein, promotes muscle growth and repair.",
+        "Contains resveratrol, may have anti-aging effects.",
+        "Contains compounds with anti-inflammatory properties, supports joint health."],
+        usage: ["Enjoy a guilt-free, gut-friendly snack that perfectly fills the gap between meals, suitable for any time of day."],
+        price: 319,
+        isHandMade: false,
+        img: multiMilletBhel
+    },
+    {
+        id: 7,
+        name: "Jowar, Bajra and Palak Khakhra",
+        ingredients: "Jowar 40%, Bajra 40%, Palak 15%, Wheat Flour 5%, Salt and Oil.",
+        healthBenefits: ["Contains antioxidants that help reduce inflammation and lower the risk of chronic diseases.", 
+        "Low glycemic index, helping regulate blood sugar levels.", 
+        "Abundant in vitamins A and C, promoting healthy vision and immune function.",
+        "Contains folate, essential for cell division and DNA synthesis.",
+        "Lowers cholesterol levels, reducing the risk of heart disease."],
+        usage: ["Enjoy these with your morning tea or as a satisfying evening snack to curb those cravings."],
+        price: 249,
+        isHandMade: false,
+        img: kharkhra
+    },
+    {
+        id: 8,
+        name: "Ragi Beetroot Khakhra",
+        ingredients: "Ragi Flour, Beetroot Paste, Wheat Flour 5%, Salt and Oil.",
+        healthBenefits: ["Contains antioxidants that help reduce inflammation and lower the risk of chronic diseases.", 
+        "Low glycemic index, helping regulate blood sugar levels.", 
+        "Abundant in vitamins A and C, promoting healthy vision and immune function.",
+        "Contains folate, essential for cell division and DNA synthesis.",
+        "Lowers cholesterol levels, reducing the risk of heart disease.",
+        "The nitrates in beetroot can help lower blood pressure, improve blood flow, and reduce the risk of heart disease and stroke"],
+        usage: ["Enjoy these with your morning tea or as a satisfying evening snack to curb those cravings."],
+        price: 249,
+        isHandMade: false,
+        img: beetRootkharkhra
     }
 ]

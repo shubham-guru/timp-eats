@@ -3,6 +3,7 @@ const routes = {
     CART: "/cart",
     CHECKOUT: "/checkout",
     PAYMENT_STATUS: "/payment-status",
+    CONTACT: "/contact",
     PRIVACYPOLICY: "/privacy-policy"
   };
   

@@ -6,6 +6,7 @@ import routes from './routes'
 import CheckOut from '../presentation/pages/CheckOut';
 import PrivacyPolicy from '../presentation/pages/PrivacyPolicy';
 import PaymentStatus from '../presentation/pages/PaymentStatus';
+import Contact from '../presentation/pages/Contact';
 
 const AppRoutes= () => {
 
@@ -18,6 +19,7 @@ const AppRoutes= () => {
       <Route path={routes.CART} element={<Suspense fallback=""><LayoutPage Children={<Cart />} /></Suspense>} />
       <Route path={routes.CHECKOUT} element={<Suspense fallback=""><LayoutPage Children={<CheckOut />} /></Suspense>} />
       <Route path={routes.PAYMENT_STATUS} element={<Suspense fallback=""><LayoutPage Children={<PaymentStatus />} /></Suspense>} />
+      <Route path={routes.CONTACT} element={<Suspense fallback=""><LayoutPage Children={<Contact />} /></Suspense>} />
       <Route path={routes.PRIVACYPOLICY} element={<Suspense fallback=""><LayoutPage Children={<PrivacyPolicy />} /></Suspense>} />
       <Route path="*" element={<NoPageFound />} />
     </Routes>

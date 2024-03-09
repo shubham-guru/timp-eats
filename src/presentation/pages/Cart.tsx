@@ -110,7 +110,7 @@ const Cart = () => {
                     <Flex align='center' justify='center' vertical style={{ width: "100%" }}>
                         <Image preview={false} src={emptyCart} alt="empty-cart" width={400} />
                         <Typography.Text style={{ color: "#fff" }}>No Products in the cart !</Typography.Text>
-                        <Button className="primary-us-btn" style={{ width: "30%", marginTop: "1vmax" }} onClick={() => navigate(routes.HOME)} type="primary">Go to Shop</Button>
+                        <Button className="primary-us-btn" style={{ width: "30%", margin: "1vmax" }} onClick={() => navigate(routes.HOME)} type="primary">Go to Shop</Button>
                     </Flex>
                 )
             }

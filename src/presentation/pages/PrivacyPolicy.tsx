@@ -55,6 +55,14 @@ const PrivacyPolicy = () => {
                 </ul>
             </Typography.Text>
 
+            <Typography.Title className="pp-title-text">Refund and Cancellation Policy</Typography.Title>
+            <Typography.Text>Our refund policy is aligned with the products and services available on our website. Refunds will be processed within 2 working days and credited back to the customer's bank account.</Typography.Text>
+
+            <Typography.Title className="pp-title-text">Shipping Policy</Typography.Title>
+            <Typography.Text>
+                The minimum and maximum timelines for shipping are 3 to 7 working days, depending on your location.
+            </Typography.Text>
+
             <Typography.Title className="pp-title-text">Changes to This Privacy Policy</Typography.Title>
             <Typography.Text>
             We reserve the right to update or change our Privacy Policy at any time. Any changes we make to our Privacy Policy will be 
@@ -75,7 +83,7 @@ const PrivacyPolicy = () => {
             <Typography.Text>
                 If you have any questions or concerns about our Privacy Policy, please contact us at 
                 <i> 
-                   <Typography.Link href="mailto:timpeats0@gmail.com"> timpeats0@gmail.com </Typography.Link> 
+                   <Typography.Link href="mailto:timpeats0@gmail.com"> admin@timpeats.com </Typography.Link> 
                 </i>
             </Typography.Text>
 
