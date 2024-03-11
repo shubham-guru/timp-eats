@@ -84,7 +84,16 @@ const PrivacyPolicy = () => {
                 If you have any questions or concerns about our Privacy Policy, please contact us at 
                 <i> 
                    <Typography.Link href="mailto:timpeats0@gmail.com"> admin@timpeats.com </Typography.Link> 
+                </i> or
+                <i> 
+                   <Typography.Link href="tel:+91-8955288660"> +91-8955288660 </Typography.Link> 
                 </i>
+            </Typography.Text>
+
+            <Typography.Title className="pp-title-text">Operating Address</Typography.Title>
+            <Typography.Text>
+                We are operating all our operations from the address : 
+                <Typography.Link target="_blank" href="https://maps.app.goo.gl/oxDpv6V3z7MefuCi7"> Sector 11, Hiran Magri, Udaipur, Rajasthan, India, 313001 </Typography.Link>
             </Typography.Text>
 
         </Col>

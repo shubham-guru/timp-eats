@@ -53,9 +53,10 @@ const Footer = () => {
                     <Image preview={false} className="icon-img" src={linkedin} alt="linkedin_icon" width={50} />
                 </Flex>
 
-                <Flex vertical>
+                <Flex vertical align="flex-end">
                     <Typography.Link href="tel:8955288660" className="footer-link-text">+91-8955288660</Typography.Link>
-                    <Typography.Link href="mailto:timpeats0@gmail.com" className="footer-link-text">timpeats0@gmail.com</Typography.Link>
+                    <Typography.Link href="mailto:admin@timpeats.com" className="footer-link-text">admin@timpeats.com</Typography.Link>
+                    <Typography.Link className="footer-link-text" target="_blank" href="https://maps.app.goo.gl/oxDpv6V3z7MefuCi7">Sector 11, Hiran Magri, Udaipur, Rajasthan, India, 313001</Typography.Link>
                 </Flex>
             </Flex>
 

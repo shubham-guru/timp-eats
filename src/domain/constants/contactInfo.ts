@@ -1,7 +1,7 @@
 export const contactInfo = [
     {
         title: "Address",
-        value: "Sector 11, Hiran Magri, Udaipur, Rajasthan, India, 301001"
+        value: "Sector 11, Hiran Magri, Udaipur, Rajasthan, India, 313001"
     },
     {
         title: "Phone",
