@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Flex, Button, Badge, Image, Affix } from 'antd'
 import routes from "../../routes/routes";
@@ -13,29 +13,8 @@ type INavBar = {
 }
 const Navbar: React.FC<INavBar> = ({ isCart = true }) => {
   const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
-  const innerWidth = window.innerWidth;
 
-  const [imageWidth, setImageWidth] = useState<number>(120); // Initial width of the image
-  console.log("🚀 ~ imageWidth:", imageWidth)
-  const aspectRatio = 120 / innerWidth; 
 
-  useEffect(() => {
-    const handleResize = () => {
-      const innerWidth = window.innerWidth;
-      const newImageWidth = innerWidth * aspectRatio;
-      setImageWidth(newImageWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    handleResize();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [aspectRatio, innerWidth]);
-
-  
   const navigate = useNavigate();
   return (
     <Affix offsetTop={0}>

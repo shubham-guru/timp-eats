@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Table, Typography, Flex, Divider, Button, message } from 'antd'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,7 @@ import { PaymentTypes } from '../../domain/constants/paymentsTypes'
 import routes from '../../routes/routes'
 import { useNavigate } from 'react-router-dom'
 import { removeAllProducts } from '../../redux/slice/cartSlice'
+import { timeZones } from '../../domain/constants/timeZones'
 
 type IOrderSummaryType = {
     userData: formUserDataInterface
@@ -24,6 +25,20 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     const productObj = useSelector((state: RootState) => state.cartProducts.productDetails);
     const [messageApi, contextHolder] = message.useMessage();
     const [selectedPayment, setSelectedPayment] = useState<string>(PaymentTypes.PAYNOW);
+    const [currency, setCurrency] = useState<string>("");
+
+    const currencySym = localStorage.getItem("currencySym");
+    const timeZone = localStorage.getItem("timeZone");
+
+    useEffect(() => {
+        if(timeZone === timeZones.INDIA) {
+            setCurrency("INR")
+          } else if(timeZone?.includes(timeZones.UK)) {
+            setCurrency("EUR")
+          } else if(timeZone?.includes(timeZones.USA)) {
+            setCurrency("USD")
+          }
+    }, [timeZone])
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,7 +48,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
             key: index,
             name: item.productInfo.name,
             qty: `${item.productInfo.quantity} ${item.productInfo.qtyLabel.includes("kg") ? "kg" : "g"}`,
-            price: `₹${item.productInfo.totalPrice}`,
+            price: `${currencySym}${item.productInfo.totalPrice}`,
             units: item.productInfo.units
         }
     })
@@ -82,11 +97,16 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     ];
 
     const calculatePriceWithDelivery = () => {
-        const checkoutAmt = (quantitySum > 1 ? totalPrice : totalPrice + 45).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'INR'
-        })
-        return checkoutAmt
+        if(currency === "INR") {
+            const checkoutAmt = (quantitySum > 1 ? totalPrice : totalPrice + 45).toLocaleString('en-US', {
+                style: 'currency',
+                currency: currency
+            })
+            return checkoutAmt
+        }
+        else {
+            return totalPrice
+        }
     }
 
     const handleCheckout = async () => {
@@ -107,7 +127,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
 
 
         if (allValuesFilled && allAddressValuesFilled) {
-            
+
             const str = calculatePriceWithDelivery();
             const numberString = str.replace(/[^\d.]/g, '');
             const totalAmt = parseFloat(numberString);
@@ -124,8 +144,8 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
                 },
                 amount: totalAmt
             }).then((res) => {
-                if(res?.data) isLoading(false)
-                if(selectedPayment === PaymentTypes.COD) {
+                if (res?.data) isLoading(false)
+                if (selectedPayment === PaymentTypes.COD) {
                     messageApi.success("Order Placed Successfully")
                     setTimeout(() => {
                         dispatch(removeAllProducts())
@@ -135,13 +155,13 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
             }).catch((err) => {
                 messageApi.error("Something went wrong")
                 console.log("🚀 ~ handleCheckout ~ err:", err)
-            }) 
+            })
 
-            if(selectedPayment === PaymentTypes.PAYNOW) {
+            if (selectedPayment === PaymentTypes.PAYNOW) {
                 const options = {
                     razorpay_key,
                     amount: order.amount,
-                    currency: "INR",
+                    currency: currency,
                     name: "Timp Eats",
                     description: "Payment for order",
                     image: logo,
@@ -151,7 +171,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
                         name: userData.full_name,
                         email: userData.email,
                         contact: userData.phone_number
-            },
+                    },
                     notes: {
                         "address": "Razorpay Corporate Office"
                     },
@@ -177,13 +197,18 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
             <Table dataSource={dataSource} columns={columns} pagination={false} />
             <Flex className="order-summary-flex" justify="space-between">
                 <Typography.Text className="order-summary-footer-text">Delivery</Typography.Text>
-                <Typography.Text className="order-summary-footer-text free-del-text">{quantitySum >= 3 ? "FREE" : "₹49"}</Typography.Text>
+                {
+                    currencySym === "₹" ?
+                        <Typography.Text className="order-summary-footer-text free-del-text">{quantitySum >= 3 ? "FREE" : "₹49"}</Typography.Text>
+                        :
+                        <Typography.Text className="order-summary-footer-text free-del-text">FREE</Typography.Text>
+                }
             </Flex> <br />
-            <Typography.Text className="order-summary-footer-text"> <i> Add <Typography.Text mark> {(3 - quantitySum) * 1000} grams</Typography.Text>  more to remove delivery cost </i></Typography.Text>
+               {currencySym === "₹" ?? <Typography.Text className="order-summary-footer-text"> <i> Add <Typography.Text mark> {(3 - quantitySum) * 1000} grams</Typography.Text>  more to remove delivery cost </i></Typography.Text> }
             <Divider />
 
             <Flex vertical gap={15}>
-                <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.COD ? 'selected-payment' : ''}`}
+                {currencySym === "₹" ?? <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.COD ? 'selected-payment' : ''}`}
                     style={{ padding: "3%" }} align="center"
                     onClick={() => setSelectedPayment(PaymentTypes.COD)}>
                     <Col span={20}>
@@ -192,12 +217,12 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
                     </Col>
                     <Col>
                         {selectedPayment === PaymentTypes.COD ? <Typography.Text className="order-summary-footer-text" style={{ color: "green" }}>
-                            {calculatePriceWithDelivery()}
+                            {currencySym} {calculatePriceWithDelivery()}
                         </Typography.Text> : null}
                     </Col>
-                </Flex>
+                </Flex> }
 
-                {/* <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.PAYNOW ? 'selected-payment' : ''}`}
+                <Flex className={`glassmorphism-effect ${selectedPayment === PaymentTypes.PAYNOW ? 'selected-payment' : ''}`}
                     style={{ padding: "3%" }} align="center"
                     onClick={() => setSelectedPayment(PaymentTypes.PAYNOW)}>
                     <Col span={20}>
@@ -206,10 +231,10 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
                     </Col>
                     <Col>
                         {selectedPayment === PaymentTypes.PAYNOW ? <Typography.Text className="order-summary-footer-text" style={{ color: "green" }}>
-                            {calculatePriceWithDelivery()}
+                            {currencySym} {calculatePriceWithDelivery()}
                         </Typography.Text> : null}
                     </Col>
-                </Flex> */}
+                </Flex>
             </Flex> <br />
             <Button type="primary" className="primary-us-btn cart-btn" onClick={handleCheckout}>Pay & Checkout</Button>
 

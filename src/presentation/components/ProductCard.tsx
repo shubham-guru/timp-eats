@@ -1,28 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Flex, Image, Col, List, Button, Modal, Select, Divider, message, Row, Collapse, CollapseProps } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import Typography from "antd/lib/typography";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { productInfoInterface } from '../../domain/interfaces/productInfoInterface';
 import { RootState } from '../../redux/store/store';
 import { addProduct } from '../../redux/slice/cartSlice';
 import { quantities, units } from '../../domain/constants/modalValues';
-import "./styles/productCard.css"
 import HeartIcon from '../../hocs/HeartIcon';
+
+import "./styles/productCard.css"
+import { timeZones } from '../../domain/constants/timeZones';
 
 type IProductCard = {
   productInfo: productInfoInterface
 }
 const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
-  const productObj = useSelector((state: RootState) => state.cartProducts)
+  const defaultQty = 250;
 
+  const productObj = useSelector((state: RootState) => state.cartProducts)
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(250);
-  const [qtyLabel, setQtyLabel] = useState<string>("250g");
+  const [quantity, setQuantity] = useState<number>(defaultQty);
+  const [qtyLabel, setQtyLabel] = useState<string>(`${defaultQty}g`);
+  const [price, setPrice] = useState<number>(0)
   const [unit, setUnit] = useState<number>(1);
 
   const dispatch = useDispatch()
+
+  const timeZone = localStorage.getItem("timeZone");
+  const currencySym = localStorage.getItem("currencySym")
+
+  useEffect(() => {
+    if(timeZone === timeZones.INDIA){
+      setPrice(productInfo.price[0]);
+    } else if(timeZone?.includes(timeZones.UK)) {
+      setPrice(productInfo.price[1])
+    } else if(timeZone?.includes(timeZones.USA)) {
+      setPrice(productInfo.price[2])
+    }
+  }, [price])
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -44,7 +61,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
       quantity: qtyLabel.includes("kg") ? quantity / 1000 : quantity,
       qtyLabel: qtyLabel,
       units: unit,
-      totalPrice: ((productInfo.price / 250) * quantity) * unit
+      totalPrice: ((price / 250) * quantity) * unit
     }
     dispatch(addProduct(productData))
     if (productObj) {
@@ -90,7 +107,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
                 <Typography className="heading-lg">{productInfo.name}</Typography>
               </Col>
               <Col>
-                <Typography className="text-md">&#8377; {productInfo.price} / 250gm</Typography>
+                <Typography className="text-md"> {currencySym} {price} / {defaultQty}g</Typography>
               </Col>
             </Row>
           </Col>
@@ -119,7 +136,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
         <Flex className="modal-flex" align="center" justify="space-between">
           <Typography.Text>Select Quantity: </Typography.Text>
           <Select
-            defaultValue="250"
+            defaultValue={String(defaultQty)}
             style={{ width: 120 }}
             onChange={(value: string, options: any) => {
               setQtyLabel(options.label)
@@ -142,12 +159,12 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
 
         <Flex className="modal-flex" align="center" justify="space-between">
           <Typography.Text>Per gram cost: </Typography.Text>
-          <Typography.Text>&#8377; {productInfo.price / 250}</Typography.Text>
+          <Typography.Text>{currencySym} {price / defaultQty}</Typography.Text>
         </Flex>
         <Divider />
         <Flex className="modal-flex" align="center" justify="space-between">
           <Typography.Text>Total: </Typography.Text>
-          <Typography.Text>&#8377; {((productInfo.price / 250) * quantity) * unit}</Typography.Text>
+          <Typography.Text>{currencySym} {((price / defaultQty) * quantity) * unit}</Typography.Text>
         </Flex>
 
         <Button className="primary-us-btn cart-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%", backgroundColor: "#457b57d8" }} type="primary">Add</Button>

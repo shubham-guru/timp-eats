@@ -12,7 +12,7 @@ const ProductContainer = () => {
       {
         productInfo.map((item: any, index: number) => {
           return (
-            <Suspense fallback=""><ProductCard productInfo={item} key={index} /></Suspense>
+            <Suspense fallback="" key={index}><ProductCard productInfo={item}/></Suspense>
           )
         })
       }

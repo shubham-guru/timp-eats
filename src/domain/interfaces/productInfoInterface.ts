@@ -5,7 +5,7 @@ export interface productInfoInterface {
     healthBenefits: Array<string>,
     usage: Array<string>,
     isHandMade: boolean,
-    price: number,
+    price: Array<number>,
     img: string,
     units: number,
     totalPrice: number,
