@@ -1,4 +1,4 @@
 export const PaymentTypes = {
     COD: "cod",
-    PAYNOW: "razorpay"
+    PAYNOW: "paypal"
 }
