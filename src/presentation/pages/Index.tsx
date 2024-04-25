@@ -14,6 +14,8 @@ const Index = () => {
     localStorage.setItem("currencySym", "€")
   } else if(timeZone?.includes(timeZones.USA)) {
     localStorage.setItem("currencySym", "$")
+  } else {
+    localStorage.setItem("currencySym", "$")
   }
 
   return (

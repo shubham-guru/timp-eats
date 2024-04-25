@@ -38,6 +38,8 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
       setPrice(productInfo.price[1])
     } else if(timeZone?.includes(timeZones.USA)) {
       setPrice(productInfo.price[2])
+    } else {
+      setPrice(productInfo.price[1])
     }
   }, [price])
 

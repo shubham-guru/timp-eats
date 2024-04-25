@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Table, Typography, Flex, Divider, Button, message } from "antd";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "../../assets/logo.png";
+// import logo from "../../assets/logo.png";
 import { RootState } from "../../redux/store/store";
 import { productInfoInterface } from "../../domain/interfaces/productInfoInterface";
 import { calculateTotalPrice } from "../../data/helpers/totalPrice";
@@ -12,7 +12,7 @@ import routes from "../../routes/routes";
 import { useNavigate } from "react-router-dom";
 import { removeAllProducts } from "../../redux/slice/cartSlice";
 import { timeZones } from "../../domain/constants/timeZones";
-import { PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+// import { PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 import PayPalButton from "./PaymentButton";
 
 type IOrderSummaryType = {
@@ -21,7 +21,7 @@ type IOrderSummaryType = {
 };
 
 const baseUrl = import.meta.env.VITE_BSE_URL;
-const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY;
+// const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY;
 
 const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   const productObj = useSelector(
@@ -33,16 +33,19 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   );
   const [currency, setCurrency] = useState<string>("");
   const [orderId, setOrderId] = useState("");
+  console.log("🚀 ~ orderId:", orderId)
 
   const currencySym = localStorage.getItem("currencySym");
   const timeZone = localStorage.getItem("timeZone");
 
   useEffect(() => {
     if (timeZone === timeZones.INDIA) {
-      setCurrency("USD");
+      setCurrency("INR");
     } else if (timeZone?.includes(timeZones.UK)) {
       setCurrency("EUR");
     } else if (timeZone?.includes(timeZones.USA)) {
+      setCurrency("USD");
+    } else{
       setCurrency("USD");
     }
   }, [timeZone]);
@@ -135,6 +138,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
         style: "currency",
         currency: currency,
       });
+      console.log("🚀 ~ calculatePriceWithDelivery ~ totalPrice:", checkoutAmt)
       return checkoutAmt;
     } else {
       return totalPrice;
@@ -217,12 +221,14 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     console.error('Payment failed!', error);
   };
 
+
   return (
     <Col className="order-summary-main-col glassmorphism-effect">
       <Typography.Text className="heading-md">Order Summary</Typography.Text>
       {contextHolder}
       <Table dataSource={dataSource} columns={columns} pagination={false} />
-      <Flex className="order-summary-flex" justify="space-between">
+      {
+        currency === "INR" ?  <Flex className="order-summary-flex" justify="space-between">
         <Typography.Text className="order-summary-footer-text">
           Delivery
         </Typography.Text>
@@ -235,25 +241,25 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
             FREE
           </Typography.Text>
         )}
-      </Flex>{" "}
+      </Flex> : null
+      }
+     
       <br />
       {currencySym === "₹" ?? (
         <Typography.Text className="order-summary-footer-text">
-          {" "}
           <i>
-            {" "}
-            Add{" "}
+            Add
             <Typography.Text mark>
-              {" "}
               {(3 - quantitySum) * 1000} grams
-            </Typography.Text>{" "}
-            more to remove delivery cost{" "}
+            </Typography.Text>
+            more to remove delivery cost
           </i>
         </Typography.Text>
       )}
       <Divider />
       <Flex vertical gap={15}>
-        {currencySym === "₹" ?? (
+        
+        {/* {currencySym === "₹" ?? (
           <Flex
             className={`glassmorphism-effect ${
               selectedPayment === PaymentTypes.COD ? "selected-payment" : ""
@@ -281,12 +287,12 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
               ) : null}
             </Col>
           </Flex>
-        )}
+        )} */}
 
-        <Flex
+       { currencySym === "$" ?  
+       <Flex
           className={`glassmorphism-effect ${
-            selectedPayment === PaymentTypes.PAYNOW ? "selected-payment" : ""
-          }`}
+            selectedPayment === PaymentTypes.PAYNOW ? "selected-payment" : "" }`}
           style={{ padding: "3%" }}
           align="center"
           onClick={() => setSelectedPayment(PaymentTypes.PAYNOW)}
@@ -307,21 +313,47 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
                 className="order-summary-footer-text"
                 style={{ color: "green" }}
               >
-                {currencySym} {calculatePriceWithDelivery()}
+                {calculatePriceWithDelivery()}
               </Typography.Text>
             ) : null}
           </Col>
-        </Flex>
-      </Flex>{" "}
+        </Flex> : 
+         <Flex
+         className={`glassmorphism-effect ${
+           selectedPayment === PaymentTypes.COD ? "selected-payment" : "" }`}
+         style={{ padding: "3%" }}
+         align="center"
+         onClick={() => setSelectedPayment(PaymentTypes.COD)}
+       >
+         <Col span={20}>
+           <Typography.Title className="footer-title">
+             COD
+           </Typography.Title>
+             <Typography.Text>
+                <i>It's our first step of believing in each other. </i>
+             </Typography.Text>
+         </Col>
+         <Col>
+         <Typography.Text
+               className="order-summary-footer-text"
+               style={{ color: "green" }}>
+                {timeZone === timeZones.INDIA && currencySym}
+               {calculatePriceWithDelivery()}
+             </Typography.Text>
+         </Col>
+       </Flex> }
+        
+      </Flex>
       <br />
-      <PayPalButton amount={calculatePriceWithDeliverytoString()} onSuccess={handleSuccess} onError={handleError}/>
-      {/* <Button
+      { timeZone !== timeZones.INDIA ? <PayPalButton amount={calculatePriceWithDeliverytoString()} onSuccess={handleSuccess} onError={handleError}/> : 
+        <Button
         type="primary"
         className="primary-us-btn cart-btn"
         onClick={handleCheckout}
       >
         Pay & Checkout
-      </Button> */}
+      </Button> }
+    
       {/* {orderId && <button onClick={capturePayment}>Capture Payment</button>} */}
     </Col>
   );
