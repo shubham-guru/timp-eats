@@ -27,10 +27,10 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
     >
       <PayPalButtons
         style={{ layout: "horizontal" }}
-        createOrder={(data, actions) => {
+        createOrder={(_data, actions) => {
           return actions.order.create({ "intent": "CAPTURE", "purchase_units": [ { "reference_id": "d9f80740-38f0-11e8-b467-0ed5f89f718b", "amount": { "currency_code": "USD", "value": amount } } ], "payment_source": { "paypal": { "experience_context": { "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED", "brand_name": "EXAMPLE INC", "locale": "en-US", "landing_page": "LOGIN", "shipping_preference": "NO_SHIPPING", "user_action": "PAY_NOW", "return_url": "http://localhost:5173", "cancel_url": "http://localhost:5173" } } } });
         }}
-        onApprove={(data:any, actions:any) => {
+        onApprove={(_data: any, actions:any) => {
             return actions?.order?.capture().then(onSuccess);
           }}
         onError={onError}
