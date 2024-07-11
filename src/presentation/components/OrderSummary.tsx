@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Table, Typography, Flex, Divider, Button, message } from "antd";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-// import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { RootState } from "../../redux/store/store";
 import { productInfoInterface } from "../../domain/interfaces/productInfoInterface";
 import { calculateTotalPrice } from "../../data/helpers/totalPrice";
@@ -21,7 +21,7 @@ type IOrderSummaryType = {
 };
 
 const baseUrl = import.meta.env.VITE_BSE_URL;
-// const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY;
+const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY;
 
 const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   const productObj = useSelector(
@@ -68,6 +68,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   );
 
   const totalPrice = calculateTotalPrice(productObj);
+  console.log("🚀 ~ totalPrice:", totalPrice)
 
   // Calculating Total Qty of Products in KGs
   const totalQty: any[] = productObj?.map(
@@ -173,40 +174,61 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
 
     if (allValuesFilled && allAddressValuesFilled) {
 
-            const str = calculatePriceWithDelivery();
-            const numberString = str.replace(/[^\d.]/g, '');
-            const totalAmt = parseFloat(numberString);
-            isLoading(true)
-            const { data: { order } }: any = await axios.post(baseUrl + "/order", {
+      const numberString = calculatePriceWithDelivery();
+      // const numberString = str.replace(/[^\d.]/g, '');
+      const totalAmt = parseFloat(numberString);
+      isLoading(true)
+      await axios.post(baseUrl + "/order", {
           user: userData,
           order: {
-            payment_mode: selectedPayment,
-            order_detail: productObj,
-            total_price: totalAmt,
-            tax: 0,
-            delievery_charge: quantitySum >= 3 ? "FREE" : "₹49",
-            status: "cart",
+              payment_mode: selectedPayment,
+              order_detail: productObj,
+              total_price: totalAmt,
+              tax: 0,
+              delievery_charge: quantitySum >= 3 ? "FREE" : "₹49",
+              status: "cart"
           },
-          amount: totalAmt,
-          currency: currency,
-        })
-        .then((res) => {
-          if (res?.data) isLoading(false);
+          amount: totalAmt
+      }).then((res) => {
+          console.log("🚀 ~ handleCheckout ~ res:", res)
+          const resOrder = res.data.order
+          if (res?.data) isLoading(false)
           if (selectedPayment === PaymentTypes.COD) {
-            messageApi.success("Order Placed Successfully");
-            setTimeout(() => {
-              dispatch(removeAllProducts());
-              navigate(routes.HOME);
-            }, 3000);
+              messageApi.success("Order Placed Successfully")
+              setTimeout(() => {
+                  dispatch(removeAllProducts())
+                  navigate(routes.HOME)
+              }, 3000)
           }
-        })
-        .catch((err) => {
-          messageApi.error("Something went wrong");
-          console.log("🚀 ~ handleCheckout ~ err:", err);
-        });
-      if (selectedPayment === PaymentTypes.PAYNOW) {
-        setOrderId(order);
+      else if (selectedPayment === PaymentTypes.PAYNOW) {
+          const options = {
+              razorpay_key,
+              amount: resOrder.amount,
+              currency: currency,
+              name: "Timp Eats",
+              description: "Payment for order",
+              image: logo,
+              order_id: resOrder.id,
+              callback_url: baseUrl + "/getPaymentConfirmation",
+              prefill: {
+                  name: userData.full_name,
+                  email: userData.email,
+                  contact: userData.phone_number
+              },
+              notes: {
+                  "address": "Razorpay Corporate Office"
+              },
+              theme: {
+                  "color": "#121212"
+              }
+          };
+          const razor = (window).Razorpay(options)
+          razor.open();
       }
+    }).catch((err) => {
+      messageApi.error("Something went wrong")
+      console.log("🚀 ~ handleCheckout ~ err:", err)
+  })
     } else {
       messageApi.error("Kindly fill all the details in the form");
     }
@@ -245,7 +267,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
       }
      
       <br />
-      {currencySym === "₹" ?? (
+      {/* {currencySym === "₹" ?? (
         <Typography.Text className="order-summary-footer-text">
           <i>
             Add
@@ -255,11 +277,11 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
             more to remove delivery cost
           </i>
         </Typography.Text>
-      )}
+      )} */}
       <Divider />
       <Flex vertical gap={15}>
         
-        {/* {currencySym === "₹" ?? (
+        {currencySym === "₹" ?? (
           <Flex
             className={`glassmorphism-effect ${
               selectedPayment === PaymentTypes.COD ? "selected-payment" : ""
@@ -287,7 +309,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
               ) : null}
             </Col>
           </Flex>
-        )} */}
+        )}
 
        { currencySym === "$" ?  
        <Flex
@@ -360,3 +382,4 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
 };
 
 export default OrderSummary;
+
