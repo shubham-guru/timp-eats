@@ -153,14 +153,14 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     else return totalPrice;
   };
 
-  const calculatePriceWithDeliverytoString = () => {
-    if (currency === "USD") {
-      const checkoutAmt = quantitySum > 1 ? totalPrice : totalPrice + 45.0;
-      return checkoutAmt.toString();
-    } else {
-      return totalPrice;
-    }
-  };
+  // const calculatePriceWithDeliverytoString = () => {
+  //   if (currency === "USD") {
+  //     const checkoutAmt = quantitySum > 1 ? totalPrice : totalPrice + 45.0;
+  //     return checkoutAmt.toString();
+  //   } else {
+  //     return totalPrice;
+  //   }
+  // };
 
   const verifyPayment = (reqBody: {
     razorpay_payment_id: string;
@@ -267,6 +267,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
           }
         })
         .catch((err) => {
+          console.log("❌ ~ error at create order: ", err)
           messageApi.error("Something went wrong");
           isLoading(false);
         });
