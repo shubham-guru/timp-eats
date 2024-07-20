@@ -29,7 +29,7 @@ type IOrderSummaryType = {
 };
 
 const baseUrl = import.meta.env.VITE_BSE_URL;
-const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY;
+const razorpay_key = import.meta.env.VITE_RAZORPAY_API_KEY_LIVE;
 
 const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   const productObj = useSelector(
@@ -137,20 +137,29 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   ];
 
   const calculateDeliveryCharge = () => {
-    const deliverCharge = 49;
+    const InrDeliverCharge = 49;
+    const IntDeliverCharge = 20;
     if (currency === "USD") {
-      return quantitySum > 1 ? 0 : deliverCharge;
+      return quantitySum > 3 ? 0 : IntDeliverCharge;
     } else if (currency === "INR") {
-      return quantitySum >= 3 ? 0 : deliverCharge;
-    } else return 0;
+      return quantitySum >= 3 ? 0 : InrDeliverCharge;
+    } else if (currency === "EUR") {
+      return quantitySum >= 3 ? 0 : IntDeliverCharge;
+    } else return quantitySum > 3 ? 0 : IntDeliverCharge;
   };
 
   const calculatePriceWithDelivery = () => {
-    if (currency === "USD")
-      return quantitySum > 1 ? totalPrice : totalPrice + 49;
-    else if (currency === "INR")
-      return quantitySum >= 3 ? totalPrice : totalPrice + 49;
-    else return totalPrice;
+    const InrDeliverCharge = 49;
+    const IntDeliverCharge = 20;
+    if (currency === "USD") {
+      return quantitySum > 3 ? totalPrice : totalPrice + IntDeliverCharge;
+    } else if (currency === "EUR") {
+      return quantitySum > 3 ? totalPrice : totalPrice + IntDeliverCharge;
+    } else if (currency === "INR") {
+      return quantitySum >= 3 ? totalPrice : totalPrice + InrDeliverCharge;
+    } else {
+      return quantitySum > 3 ? totalPrice : totalPrice + IntDeliverCharge
+    }
   };
 
   // const calculatePriceWithDeliverytoString = () => {
@@ -171,7 +180,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
       .post(baseUrl + "/paymentConfirmation", {
         ...reqBody,
         currency,
-        amount: parseFloat(calculatePriceWithDelivery()),
+        amount: calculatePriceWithDelivery(),
       })
       .then((res) => {
         messageApi.success(res.data.message);
@@ -204,7 +213,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
     );
 
     if (allValuesFilled && allAddressValuesFilled) {
-      const totalAmt = parseFloat(calculatePriceWithDelivery());
+      const totalAmt = calculatePriceWithDelivery();
       // const numberString = str.replace(/[^\d.]/g, '');
 
       isLoading(true);
@@ -267,7 +276,7 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
           }
         })
         .catch((err) => {
-          console.log("❌ ~ error at create order: ", err)
+          console.log("❌ ~ error at create order: ", err);
           messageApi.error("Something went wrong");
           isLoading(false);
         });
@@ -277,41 +286,24 @@ const OrderSummary: React.FC<IOrderSummaryType> = ({ userData, isLoading }) => {
   };
 
   const dataSource = productsData;
+  const delivery = calculateDeliveryCharge()
+  const renderDelivery = delivery ? currencySym!+delivery :"FREE"
 
   return (
     <Col className="order-summary-main-col glassmorphism-effect">
       <Typography.Text className="heading-md">Order Summary</Typography.Text>
       {contextHolder}
       <Table dataSource={dataSource} columns={columns} pagination={false} />
-      {currency === "INR" ? (
         <Flex className="order-summary-flex" justify="space-between">
           <Typography.Text className="order-summary-footer-text">
             Delivery
           </Typography.Text>
-          {currencySym === "₹" ? (
             <Typography.Text className="order-summary-footer-text free-del-text">
-              {calculateDeliveryCharge() || "FREE"}
+            { renderDelivery}
             </Typography.Text>
-          ) : (
-            <Typography.Text className="order-summary-footer-text free-del-text">
-              FREE
-            </Typography.Text>
-          )}
         </Flex>
-      ) : null}
 
       <br />
-      {/* {currencySym === "₹" ?? (
-        <Typography.Text className="order-summary-footer-text">
-          <i>
-            Add
-            <Typography.Text mark>
-              {(3 - quantitySum) * 1000} grams
-            </Typography.Text>
-            more to remove delivery cost
-          </i>
-        </Typography.Text>
-      )} */}
       <Divider />
       <Flex vertical gap={15}>
         {currencySym === "₹" ?? (

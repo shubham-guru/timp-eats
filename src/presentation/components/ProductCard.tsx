@@ -166,7 +166,7 @@ const ProductCard: React.FC<IProductCard> = ({ productInfo }) => {
         <Divider />
         <Flex className="modal-flex" align="center" justify="space-between">
           <Typography.Text>Total: </Typography.Text>
-          <Typography.Text>{currencySym} {((price / defaultQty) * quantity) * unit}</Typography.Text>
+          <Typography.Text>{currencySym} {Number((((price / defaultQty) * quantity) * unit).toFixed(2))}</Typography.Text>
         </Flex>
 
         <Button className="primary-us-btn cart-btn" onClick={() => addToCart(productInfo)} style={{ width: "100%", backgroundColor: "#457b57d8" }} type="primary">Add</Button>

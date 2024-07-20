@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
       const info = {
         img: action.payload.image,
         name: action.payload.name,
-        totalPrice: action.payload.totalPrice,
+        totalPrice: Number(action.payload.totalPrice.toFixed(2)),
         quantity: action.payload.quantity,
         qtyLabel: action.payload.qtyLabel,
         units: action.payload.units

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Flex, Form, Input, Row, Typography, message } from 'antd'
 import OrderSummary from '../components/OrderSummary'
 import PhoneInput, { Country } from 'react-phone-number-input'
@@ -6,6 +6,7 @@ import { FetchData } from '../../data/Apis/FetchData'
 import { LoadingOutlined } from "@ant-design/icons"
 import { pincodeUrl } from '../../domain/constants/Urls'
 import { IUserAddress } from '../../domain/interfaces/formUserDataInterface'
+import { timeZones } from "../../domain/constants/timeZones";
 import 'react-phone-number-input/style.css'
 import "./styles/checkout.css"
 
@@ -33,6 +34,19 @@ const CheckOut = () => {
   const [countryCode, setCountryCode] = useState("IN");
   const [loading, setLoading] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
+  const timeZone = localStorage.getItem("timeZone");
+
+  useEffect(() => {
+    if (timeZone === timeZones.INDIA) {
+      setCountryCode("IN");
+    } else if (timeZone?.includes(timeZones.UK)) {
+      setCountryCode("England");
+    } else if (timeZone?.includes(timeZones.USA)) {
+      setCountryCode("US");
+    } else {
+      setCountryCode("US");
+    }
+  }, [timeZone]);
 
   const handlePinCode = async (e: { target: { name: string, value: string } }) => {
     if (e.target.name === "pincode") {
@@ -46,7 +60,7 @@ const CheckOut = () => {
       
       const params = {
         codes: value,
-        country: countryCode,
+        // country: countryCode,
         apikey: apiKey
       };
 
