@@ -35,7 +35,7 @@ const CheckOut = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
   const timeZone = localStorage.getItem("timeZone");
-
+  
   useEffect(() => {
     if (timeZone === timeZones.INDIA) {
       setCountryCode("IN");
@@ -47,7 +47,8 @@ const CheckOut = () => {
       setCountryCode("US");
     }
   }, [timeZone]);
-
+  console.log("🚀 ~ CheckOut ~ countryCode:", countryCode)
+  
   const handlePinCode = async (e: { target: { name: string, value: string } }) => {
     if (e.target.name === "pincode") {
 
